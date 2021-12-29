@@ -1,0 +1,22 @@
+{
+	"groups": [
+		{ "id": 1, "title": "tarefas de casa", "tasks": [
+		  { "id": 2, "title": "fazer café" },
+		  { "id": 3, "title": "cortar grama" },
+		  { "id": 4, "title": "passear com cachorro" },
+		  { "id": 5, "title": "lavar carro" },
+		  { "id": 6, "title": "fazer compras" },
+		  { "id": 7, "title": "banhar cachorro" }
+		]},
+		{ "id": 10, "title": "tarefas do trabalho", "tasks": [
+			{ "id": 11, "title": "tarefa A" },
+			{ "id": 12, "title": "tarefa B" },
+			{ "id": 13, "title": "tarefa C" },
+			{ "id": 14, "title": "tarefa D" },
+			{ "id": 15, "title": "tarefa E" },
+			{ "id": 16, "title": "tarefa F" }
+	  ]}
+	],
+	"profile": { "name": "leonardo" }
+  }
+  
