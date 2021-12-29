@@ -4,6 +4,7 @@
 
         <router-link class="navitem" to="/about">About</router-link>
         <router-link class="navitem" to="/contact">Contact Us</router-link>
+        <router-link class="navitem" to="/task-group">Task group</router-link>
 
         <div class="signin">
             <router-link class="navitem" to="/login">Login</router-link>
