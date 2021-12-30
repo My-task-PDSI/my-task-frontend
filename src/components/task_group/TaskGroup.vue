@@ -7,7 +7,7 @@
 </template>
 
 <script>
-//
+
 import TaskCard from "../task/TaskCard.vue";
 import { Api } from "../../services/api";
 export default {

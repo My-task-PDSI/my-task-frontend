@@ -1,19 +1,84 @@
 <template>
-  <h1>{{$options.name}}</h1>
-  <TaskGroup id-group="1"/>
+  <TaskGroupNavBar />
+  <div class="task-menu-container">
+    <h3>My Tasks</h3>
+    <button class="plus-icon"><i class="fas fa-plus"></i></button>
+  </div>
+  <div v-if="isFetchTaskGroups" class="task-groups-container">
+    <h1>fetch groups</h1>
+  </div>
+  <div else class="task-groups-container">
+    <TaskGroupCard v-for="group in taskGroups" :="group" :key="group.propsId" />
+  </div>
 </template>
 
 <script>
-import TaskGroup from './TaskGroup.vue';
+import TaskGroupNavBar from "./TaskGroupNavBar.vue";
+import TaskGroupCard from "./TaskGroupCard.vue";
+import { Api } from "../../services/api";
 export default {
-    name:'TaskGroupPage',
-    
-    components:{
-        TaskGroup
-    }
-}
+  name: "TaskGroupPage",
+
+  components: {
+    TaskGroupNavBar,
+    TaskGroupCard,
+  },
+  data() {
+    return {
+      taskGroups: [],
+      isFetchTaskGroups: true,
+    };
+  },
+  async mounted() {
+    console.log(this.taskGroups);
+    const taskGroups = await Api.get("task-groups");
+    this.taskGroups = taskGroups.data.reduce((acc, task) => {
+      const newValue = Object.entries(task).reduce((acc, [key, value]) => {
+        acc["props-" + key] = value;
+        return acc;
+      }, {});
+      acc.push(newValue);
+      return acc;
+    }, []);
+    console.log("teste", this.taskGroups);
+    this.isFetchTaskGroups = false;
+  },
+};
 </script>
-
 <style>
-
+.task-menu-container {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.task-groups-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-wrap: wrap;
+}
+.task-menu-container > h3 {
+  margin-right: 10px;
+}
+.task-menu-container > .plus-icon {
+  border: 4px solid rgb(97, 171, 175);
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.task-menu-container > .plus-icon i {
+  font-size: 20px;
+  color: rgb(97, 171, 175);
+}
 </style>
