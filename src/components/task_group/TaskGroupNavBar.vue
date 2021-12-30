@@ -85,7 +85,7 @@ export default {
   border-radius: 10px;
 }
 .notification-container i {
-  font-size: 32px;
+  font-size: 24px;
 }
 .search-container {
   height: 90px;

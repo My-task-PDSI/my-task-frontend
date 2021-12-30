@@ -12,6 +12,7 @@
 <script>
   import ButtonComp from '../ButtonComp.vue'
   export default {
+    name:"HomePage",
     components: {
       ButtonComp
     }

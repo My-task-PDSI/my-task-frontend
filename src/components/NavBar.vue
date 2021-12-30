@@ -1,28 +1,26 @@
 <template>
-    <div class="nav">
-        <br>
-    </div>
+  <div class="nav"></div>
 </template>
 
 <script>
 export default {
-    name: "NavBar"
-}
+    name:"NavBar"
+};
 </script>
 
 <style scoped>
-    .nav {
-        display: flex;
-        background-color: #1649FF;
-        height: 40px;
-    }
-    .navitem {
-        margin-left: 20px;
-    }
-    .signin {
-        margin-left: 70%;
-    }
-    .signin .navitem {
-        margin: 10px;
-    }
+.nav {
+  display: flex;
+  background-color: #1649ff;
+  height: 40px;
+}
+.navitem {
+  margin-left: 20px;
+}
+.signin {
+  margin-left: 70%;
+}
+.signin .navitem {
+  margin: 10px;
+}
 </style>
