@@ -1,20 +1,12 @@
 <template>
-  <NavBar />
+  <HomePage />
+  <notifications position="top right" class="my-notification"/>
   <router-view />
 </template>
 
-<script>
-import NavBar from './components/NavBar.vue'
-
-export default {
-  name: 'App',
-  components: {
-    NavBar,
-  }
-}
-</script>
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+
 *{
   margin:0;
   padding:0;
@@ -24,9 +16,13 @@ body{
   min-height: 100vh;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Poppins;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
+
+.my-notification {
+  margin-top: 80px;
+}
+
 </style>

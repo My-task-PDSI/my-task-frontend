@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Login from "../components/signin/Login.vue";
 import SignUp from "../components/signin/SignUp.vue";
-import HomePage from "../components/application/HomePage.vue"
+import HomePage from "../components/landing/HomePage.vue"
 import About from "../components/landing/About.vue"
 import Contact from "../components/landing/Contact.vue"
 import TaskGroupPage from "../components/task_group/TaskGroupPage.vue"
