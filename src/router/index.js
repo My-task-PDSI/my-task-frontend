@@ -5,6 +5,7 @@ import HomePage from "../components/landing/HomePage.vue"
 import About from "../components/landing/About.vue"
 import Contact from "../components/landing/Contact.vue"
 import TaskGroupPage from "../components/task_group/TaskGroupPage.vue"
+import TaskGroup from "../components/task_group/TaskGroup.vue"
 
 const routes = [
 
@@ -13,7 +14,8 @@ const routes = [
   { path: "/signup", component: SignUp },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
-  { path: "/task-group/", component: TaskGroupPage }
+  {path: "/task-group", component:TaskGroupPage },
+  { path: "/task-group/:id", component: TaskGroup , name:'group'},
 ];
 
 const router = createRouter({

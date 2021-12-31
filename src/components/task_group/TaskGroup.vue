@@ -1,5 +1,6 @@
 <template>
   <h1>{{ $options.name }}</h1>
+  <h1>{{ $route.params }}</h1>
   <h1 v-if="isFetchTasks">fetch tasks...</h1>
   <div else  class="tasks">
     <TaskCard v-for="(task, index) in tasks" :="task" :key="index" />

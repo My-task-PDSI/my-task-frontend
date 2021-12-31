@@ -2,7 +2,7 @@
   <TaskGroupNavBar />
   <div class="task-menu-container">
     <h3>My Tasks</h3>
-    <button class="plus-icon"><i class="fas fa-plus"></i></button>
+    <button @click="createNewGroup" class="plus-icon"><i class="fas fa-plus"></i></button>
   </div>
   <div v-if="isFetchTaskGroups" class="task-groups-container">
     <h1>fetch groups</h1>
@@ -10,6 +10,7 @@
   <div else class="task-groups-container">
     <TaskGroupCard v-for="group in taskGroups" :="group" :key="group.propsId" />
   </div>
+  
 </template>
 
 <script>
@@ -43,7 +44,13 @@ export default {
     console.log("teste", this.taskGroups);
     this.isFetchTaskGroups = false;
   },
-};
+  methods:{
+    createNewGroup(){
+      console.log(this.$route);
+      this.$router.push({ name:'group',params:{id:'new'}});
+    }
+  }
+}
 </script>
 <style>
 .task-menu-container {
