@@ -7,7 +7,8 @@
         <span class="msg">Vamos ajudá-lo a organizar suas tarefas. <br> Cadastre-se já!</span> <br>
       </div>
       <input type="text" placeholder="Nome Completo" v-model="newUser.name"> <br>
-      <input class="username" type="email" placeholder="E-mail" v-model="newUser.email"> <br>
+      <input class="email" type="email" placeholder="E-mail" v-model="newUser.email"> <br>
+      <input class="username" type="text" placeholder="Nome de usuário" v-model="newUser.username"> <br>
       <input class="password" type="password" placeholder="Senha" v-model="newUser.password"> <br>
       <input class="confirmPassword" type="password" placeholder="Confirme sua senha" v-model="newUser.confirmPassword"> <br>
       <ButtonComp msg="Cadastre-se" v-on:click="signup"/> <br> <br>
@@ -19,6 +20,7 @@
 <script>
 import NavBar from '../NavBar.vue'
 import ButtonComp from '../ButtonComp.vue'
+import Api from '../../services/api'
 
 export default {
   components: {
@@ -27,7 +29,7 @@ export default {
   },
   data() {
     return {
-      newUser: { name: "", email: "", password: "", confirmPassword: "" }
+      newUser: { name: "", email: "", username:"", password: "", confirmPassword: "" }
     }
   },
   methods: {
@@ -37,7 +39,17 @@ export default {
       } else if (this.newUser.password != this.newUser.confirmPassword) {
           this.$notify({ type: "error", text: "Senhas devem ser iguais!" })
       } else {
-        this.$notify({ type: "success", text: "Cadastro realizado com sucesso!" })
+        Api.post("/signup", this.newUser).then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            this.$notify({ type: "success", text: "Cadastro realizado com sucesso!" })
+          } else {
+            this.$notify({ type: "error", text: "Uusário já existente" })
+          }
+        }).catch((error) => {
+          console.log(error);
+          this.$notify({ type: "error", text: "Uusário já existente" })
+        })
       }
     }
   },
