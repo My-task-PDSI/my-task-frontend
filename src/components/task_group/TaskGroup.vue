@@ -31,7 +31,7 @@
 <script>
 import TaskCard from "../task/TaskCard.vue";
 import TaskGroupSingleNavBar from "./TaskGroupSingleNavBar.vue";
-import { Api } from "../../services/api";
+import Api from "../../services/api";
 export default {
   name: "TaskGroup",
   components: {

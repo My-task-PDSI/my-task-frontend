@@ -16,7 +16,7 @@
 <script>
 import TaskGroupNavBar from "./TaskGroupNavBar.vue";
 import TaskGroupCard from "./TaskGroupCard.vue";
-import { Api } from "../../services/api";
+import Api from "../../services/api";
 export default {
   name: "TaskGroupPage",
 
