@@ -5,19 +5,30 @@
       <h3>{{ propsTitle }}</h3>
     </div>
     <div class="task-icons-container">
-      <i class="far fa-edit"></i>
-      <i class="far fa-trash-alt"></i>
+      <button class="btn-icon"><i class="far fa-edit"></i></button>
+      <button @click="removeGroup" class="btn-icon">
+        <i class="far fa-trash-alt"></i>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import Api from "../../services/api";
 export default {
   name: "TaskGroupCard",
   props: {
     propsTitle: String,
     propsId: Number,
     propsDescription: String,
+  },
+  emits: ["remove"],
+  methods: {
+    async removeGroup() {
+      const response = await Api.delete(`task-groups/${this.propsId}`);
+      console.log(response.status === 200);
+      this.$emit("remove", this.propsId);
+    },
   },
 };
 </script>
@@ -40,18 +51,22 @@ export default {
   border-radius: 10px;
   background-color: rgba(108, 13, 163, 0.336);
 }
-.task-icons-container{
+.task-icons-container {
   width: 50px;
   height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.task-icons-container > i{
-  font-size: 20px;
-  color:rgb(97, 171, 175);
+.btn-icon {
+  background-color: transparent;
+  border: none;
 }
-.task-info-container{
+.btn-icon > i {
+  font-size: 20px;
+  color: rgb(97, 171, 175);
+}
+.task-info-container {
   width: 140px;
   height: 90px;
 }

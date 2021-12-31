@@ -8,7 +8,12 @@
     <h1>fetch groups</h1>
   </div>
   <div else class="task-groups-container">
-    <TaskGroupCard v-for="group in taskGroups" :="group" :key="group.propsId" />
+    <TaskGroupCard
+    v-for="group in taskGroups"
+    :="group"
+    :key="group.propsId"
+    @remove="onRemove"
+    />
   </div>
   
 </template>
@@ -31,7 +36,6 @@ export default {
     };
   },
   async mounted() {
-    console.log(this.taskGroups);
     const taskGroups = await Api.get("task-groups");
     this.taskGroups = taskGroups.data.reduce((acc, task) => {
       const newValue = Object.entries(task).reduce((acc, [key, value]) => {
@@ -41,13 +45,14 @@ export default {
       acc.push(newValue);
       return acc;
     }, []);
-    console.log("teste", this.taskGroups);
     this.isFetchTaskGroups = false;
   },
   methods:{
     createNewGroup(){
-      console.log(this.$route);
       this.$router.push({ name:'group',params:{id:'new'}});
+    },
+    onRemove(id){
+      this.taskGroups = this.taskGroups.filter(group => group['props-id'] !== id);
     }
   }
 }
