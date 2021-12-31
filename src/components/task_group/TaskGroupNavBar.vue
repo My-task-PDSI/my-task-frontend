@@ -3,19 +3,25 @@
     <div class="user-info">
       <div class="avatar-container">
         <div class="img-container">
-        <img
-          src="https://media.istockphoto.com/photos/bearded-man-is-meditating-outdoor-in-the-park-with-face-raised-up-to-picture-id1202966610?b=1&k=20&m=1202966610&s=170667a&w=0&h=iAqOeZgkfX4DlIfBl7Z_G1vpaKax4DK2ngt5vXVWpXA="
-          alt="avatar"
-        />
-      </div>
+          <img
+            src="https://media.istockphoto.com/photos/bearded-man-is-meditating-outdoor-in-the-park-with-face-raised-up-to-picture-id1202966610?b=1&k=20&m=1202966610&s=170667a&w=0&h=iAqOeZgkfX4DlIfBl7Z_G1vpaKax4DK2ngt5vXVWpXA="
+            alt="avatar"
+          />
+        </div>
       </div>
       <div class="header">
         <h1>Inicio</h1>
-        <h3>{{currentDay}}</h3>
+        <h3>{{ currentDay }}</h3>
       </div>
     </div>
     <div class="search-container">
-      <input type="search" name="search" placeholder="Pesquise por tarefas..." />
+      <input
+        ref="search"
+        @search="startSearch"
+        type="search"
+        name="search"
+        placeholder="Pesquise por tarefas..."
+      />
     </div>
     <div class="notification-container">
       <i class="fas fa-bell"></i>
@@ -26,11 +32,19 @@
 <script>
 export default {
   name: "TaskGroupNavBar",
-  data(){
-    
+  emits: ["startSearch"],
+  data() {
     return {
-      currentDay: (new Date()).toLocaleDateString('pt-BR',{month: 'long', day: 'numeric'})
-    }
+      currentDay: new Date().toLocaleDateString("pt-BR", {
+        month: "long",
+        day: "numeric",
+      }),
+    };
+  },
+  methods: {
+    startSearch(event) {
+      this.$emit('startSearch', event.target.value);
+    },
   },
 };
 </script>
@@ -62,18 +76,18 @@ export default {
 }
 
 .avatar-container .img-container {
-  position:relative;
+  position: relative;
   height: 50px;
   width: 50px;
-  border-radius:10px;
-  overflow:hidden;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .avatar-container .img-container img {
-  position:absolute;
+  position: absolute;
   height: 50px;
-  top:50%;
-  left:50%;
-  transform : translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .user-info .header {
   width: 210px;
@@ -110,9 +124,9 @@ export default {
   height: 40px;
   width: 90%;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.2);
-  background:transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: transparent;
   font-size: 16px;
-  padding-left:10px;
+  padding-left: 10px;
 }
 </style>
