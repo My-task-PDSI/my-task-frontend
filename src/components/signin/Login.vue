@@ -3,7 +3,7 @@
     <NavBar />
     <div class="loginContainer">
       <h4 class="title">Faça login com sua conta My tasks</h4>
-      <input class="username" type="email" placeholder="E-mail" v-model="userLogged.email"> <br>
+      <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"> <br>
       <input class="password" type="password" placeholder="Senha" v-model="userLogged.password"> <br>
       <ButtonComp msg="Fazer login" v-on:click="login"/> <br> <br>
       <span>Não possui uma conta? <router-link to="/signup"><button>Cadastre-se</button></router-link></span>
@@ -12,6 +12,9 @@
 </template>
 
 <script>
+
+import Api from "../../services/api.js"
+
 import NavBar from '../NavBar.vue'
 import ButtonComp from '../ButtonComp.vue'
 
@@ -22,13 +25,22 @@ export default {
   },
   data() {
     return {
-      userLogged: { email: "", password: "" }
+      userLogged: { username: "", password: "" }
     }
   },
   methods: {
     login() {
-      if( this.userLogged.eail == "" || this.userLogged.password == "" ) {
+      if( this.userLogged.username == "" || this.userLogged.password == "" ) {
         this.$notify({ type: "error", text: "Preencha todos os campos!" })
+      } else {
+        Api.post("/auth", this.userLogged).then((response) => {
+          console.log(response)
+          // localStorage.username = this.userLogged.username
+          // this.$router.push("/task-group")
+        }).catch((error) => {
+          console.error(error)
+          this.$notify({ type: "error", text: "Usuário não encontrado!" })
+        })
       }
     }
   },

@@ -12,7 +12,6 @@
     "@kyvg/vue3-notification": "^2.3.4",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
-    "notiwind": "^1.2.4",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12"
   },
