@@ -1,5 +1,4 @@
 <template>
-  <HomePage />
   <notifications position="top right" class="my-notification"/>
   <router-view />
 </template>
