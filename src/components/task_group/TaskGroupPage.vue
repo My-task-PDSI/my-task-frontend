@@ -1,16 +1,22 @@
 <template>
-  <TaskGroupNavBar />
+  <TaskGroupNavBar @start-search="startSearch" />
   <div class="task-menu-container">
     <h3>My Tasks</h3>
-    <button @click="createNewGroup" class="plus-icon"><i class="fas fa-plus"></i></button>
+    <button @click="createNewGroup" class="plus-icon">
+      <i class="fas fa-plus"></i>
+    </button>
   </div>
   <div v-if="isFetchTaskGroups" class="task-groups-container">
     <h1>fetch groups</h1>
   </div>
   <div else class="task-groups-container">
-    <TaskGroupCard v-for="group in taskGroups" :="group" :key="group.propsId" />
+    <TaskGroupCard
+      v-for="group in filtredGroups"
+      :="group"
+      :key="group.propsId"
+      @remove="onRemove"
+    />
   </div>
-  
 </template>
 
 <script>
@@ -28,10 +34,20 @@ export default {
     return {
       taskGroups: [],
       isFetchTaskGroups: true,
+      searchValue: "",
     };
   },
+  computed: {
+    filtredGroups() {
+      const searchValue = this.searchValue.toLowerCase()
+      const compare = searchValue===''
+      return this.taskGroups.filter((group) => {
+        const title = group["props-title"].toLowerCase()
+        return compare || title.includes(searchValue);
+      });
+    },
+  },
   async mounted() {
-    console.log(this.taskGroups);
     const taskGroups = await Api.get("task-groups");
     this.taskGroups = taskGroups.data.reduce((acc, task) => {
       const newValue = Object.entries(task).reduce((acc, [key, value]) => {
@@ -41,16 +57,22 @@ export default {
       acc.push(newValue);
       return acc;
     }, []);
-    console.log("teste", this.taskGroups);
     this.isFetchTaskGroups = false;
   },
-  methods:{
-    createNewGroup(){
-      console.log(this.$route);
-      this.$router.push({ name:'group',params:{id:'new'}});
-    }
-  }
-}
+  methods: {
+    createNewGroup() {
+      this.$router.push({ name: "group", params: { id: "new" } });
+    },
+    onRemove(id) {
+      this.taskGroups = this.taskGroups.filter(
+        (group) => group["props-id"] !== id
+      );
+    },
+    startSearch(value) {
+      this.searchValue = value;
+    },
+  },
+};
 </script>
 <style scoped>
 .task-menu-container {
