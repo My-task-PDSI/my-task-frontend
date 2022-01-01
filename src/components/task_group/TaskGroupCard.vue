@@ -5,7 +5,7 @@
       <h3>{{ propsTitle }}</h3>
     </div>
     <div class="task-icons-container">
-      <button class="btn-icon"><i class="far fa-edit"></i></button>
+      <button @click="editGroup" class="btn-icon"><i class="far fa-edit"></i></button>
       <button @click="removeGroup" class="btn-icon">
         <i class="far fa-trash-alt"></i>
       </button>
@@ -28,6 +28,12 @@ export default {
       const response = await Api.delete(`task-groups/${this.propsId}`);
       console.log(response.status === 200);
       this.$emit("remove", this.propsId);
+    },
+    async editGroup() {
+      this.$router.push({
+        name: "group",
+        query: {id: this.propsId, edit:true},
+      });
     },
   },
 };

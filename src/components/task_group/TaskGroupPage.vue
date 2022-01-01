@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     createNewGroup() {
-      this.$router.push({ name: "group", params: { id: "new" } });
+      this.$router.push({ name: "group", query: { create:true } });
     },
     onRemove(id) {
       this.taskGroups = this.taskGroups.filter(

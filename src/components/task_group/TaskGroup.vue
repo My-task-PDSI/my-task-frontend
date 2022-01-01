@@ -4,6 +4,7 @@
     <div class="task-group-info">
       <div v-if="isEditing" class="container">
         <h1>Editando...</h1>
+        <TaskGroupFormEdit :id="id" :title="title" :description="description" />
       </div>
       <div v-else class="container-title">
         <h1>Titulo</h1>
@@ -22,6 +23,8 @@
         <h1>fetch tasks...</h1>
       </div>
       <div else class="tasks-list">
+        <h1>{{ $route.params }},{{ $route.query }}</h1>
+        <h1>{{ id }},{{ isEditing }}</h1>
         <TaskCard v-for="(task, index) in tasks" :="task" :key="index" />
       </div>
     </div>
@@ -31,16 +34,18 @@
 <script>
 import TaskCard from "../task/TaskCard.vue";
 import TaskGroupSingleNavBar from "./TaskGroupSingleNavBar.vue";
+import TaskGroupFormEdit from "./TaskGroupFormEdit.vue";
 import Api from "../../services/api";
 export default {
   name: "TaskGroup",
   components: {
     TaskCard,
     TaskGroupSingleNavBar,
+    TaskGroupFormEdit,
   },
   data() {
     return {
-      id: this.$route.params.id,
+      id: -1,
       title: "",
       description: "",
       tasks: [],
@@ -49,7 +54,11 @@ export default {
     };
   },
   async mounted() {
-    if (this.id !== "new") {
+    const { edit, id, create } = this.$route.query;
+    this.id = create === "true" ? -1 : +id;
+    this.isEditing = create === "true" || edit === "true";
+
+    if (create !== "true" || this.id !== -1) {
       const tasks = await Api.get(`tasks?id_group=${this.id}`);
       this.tasks = tasks.data.reduce((acc, task) => {
         const newValue = Object.entries(task).reduce((acc, [key, value]) => {
