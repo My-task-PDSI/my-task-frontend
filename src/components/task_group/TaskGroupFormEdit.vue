@@ -3,18 +3,14 @@
     <form ref="formdata">
       <div class="input-container">
         <label for="title">Titulo:</label>
-        <input name="title" type="text">
+        <input name="title" :value="title" type="text">
       </div>
       <div class="input-container">
         <label for="description">Descrição: </label>
-        <textarea name="description" cols="30" rows="10"></textarea>
+        <textarea name="description" cols="30" rows="10" :value="description"></textarea>
       </div>
-      <div class="input-container">
-        <label for=""></label>
-        <input type="text">
-      </div>
-      <button>Save</button>
-      <button>Close</button>
+      <button @click="onSave">Save</button>
+      <button @click="onClose">Close</button>
     </form>
   </div>
 </template>
@@ -37,10 +33,21 @@ export default {
       required:true
     }
   },
+  emits:['save','close'],
   methods:{
-    onSave(){
-      console.log(this.$refs.formdata.title)
-    }
+    onSave(event){
+      event.preventDefault();
+      const formdata = this.$refs.formdata
+      const data = {
+        title:formdata.title.value,
+        description:formdata.description.value,
+      }
+      this.$emit('save',data);
+    },
+    onClose(event){
+      event.preventDefault();
+      this.$emit('close');
+    },
   },
 };
 </script>
