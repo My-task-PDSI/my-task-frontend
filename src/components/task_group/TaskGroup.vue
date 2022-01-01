@@ -1,6 +1,9 @@
 <template>
   <div class="task-group-container">
-    <TaskGroupSingleNavBar />
+    <BaseNavBar>
+      <Avatar />
+      <NotificationButton />
+    </BaseNavBar>
     <div class="task-group-info">
       <div v-if="isEditing" class="container">
         <TaskGroupFormEdit
@@ -37,16 +40,20 @@
 </template>
 
 <script>
+import Avatar from "../Avatar.vue";
+import BaseNavBar from "../BaseNavBar.vue";
+import NotificationButton from "../NotificationButton.vue";
 import TaskCard from "../task/TaskCard.vue";
-import TaskGroupSingleNavBar from "./TaskGroupSingleNavBar.vue";
 import TaskGroupFormEdit from "./TaskGroupFormEdit.vue";
 import Api from "../../services/api";
 import { addPrefixToObjectKey } from "../../utils";
 export default {
   name: "TaskGroup",
   components: {
+    Avatar,
+    BaseNavBar,
+    NotificationButton,
     TaskCard,
-    TaskGroupSingleNavBar,
     TaskGroupFormEdit,
   },
   data() {
@@ -66,9 +73,7 @@ export default {
     closeForm() {
       this.isEditing = false;
     },
-    async removeGroup() {
-      
-    },
+    async removeGroup() {},
     async saveData(data) {
       this.title = data.title;
       this.description = data.description;
@@ -87,8 +92,8 @@ export default {
           description: this.description,
         });
       }
-      if(group.status===200){
-        console.log('atualizado');
+      if (group.status === 200) {
+        console.log("atualizado");
       }
     },
   },

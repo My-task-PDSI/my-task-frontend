@@ -1,5 +1,24 @@
 <template>
-  <div class="task-group-navbar">
+  <BaseNavBar bg-color="#feeee9">
+    <div class="user-info">
+      <Avatar />
+      <div class="header">
+        <h1>Inicio</h1>
+        <h3>{{ currentDay }}</h3>
+      </div>
+    </div>
+    <div class="search-container">
+      <input
+        ref="search"
+        @search="startSearch"
+        type="search"
+        name="search"
+        placeholder="Pesquise por tarefas..."
+      />
+    </div>
+    <NotificationButton />
+  </BaseNavBar>
+  <!-- <div class="task-group-navbar">
     <div class="user-info">
       <div class="avatar-container">
         <div class="img-container">
@@ -26,13 +45,21 @@
     <div class="notification-container">
       <i class="fas fa-bell"></i>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
+import Avatar from "../Avatar.vue";
+import BaseNavBar from "../BaseNavBar.vue";
+import NotificationButton from "../NotificationButton.vue";
 export default {
   name: "TaskGroupNavBar",
   emits: ["startSearch"],
+  components: {
+    Avatar,
+    BaseNavBar,
+    NotificationButton,
+  },
   data() {
     return {
       currentDay: new Date().toLocaleDateString("pt-BR", {
@@ -43,7 +70,7 @@ export default {
   },
   methods: {
     startSearch(event) {
-      this.$emit('startSearch', event.target.value);
+      this.$emit("startSearch", event.target.value);
     },
   },
 };

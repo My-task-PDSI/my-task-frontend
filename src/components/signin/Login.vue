@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <BaseNavBar />
     <div class="loginContainer">
       <h4 class="title">Faça login com sua conta My tasks</h4>
       <input class="username" type="text" placeholder="Nome de usuário" v-model="userLogged.username"> <br>
@@ -15,12 +15,12 @@
 
 import Api from "../../services/api.js"
 
-import NavBar from '../NavBar.vue'
+import BaseNavBar from '../BaseNavBar.vue'
 import ButtonComp from '../ButtonComp.vue'
 
 export default {
   components: {
-    NavBar,
+    BaseNavBar,
     ButtonComp
   },
   data() {

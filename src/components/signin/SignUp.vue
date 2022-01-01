@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <BaseNavBar />
     <div class="signupContainer">
       <div class="headerMsg">
         <h4 class="title">Bem vindo(a) ao My Tasks</h4> <br>
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import NavBar from '../NavBar.vue'
+import BaseNavBar from '../BaseNavBar.vue'
 import ButtonComp from '../ButtonComp.vue'
 import Api from '../../services/api'
 
 export default {
   components: {
-    NavBar,
+    BaseNavBar,
     ButtonComp
   },
   data() {
@@ -60,7 +60,7 @@ export default {
   text-align: center;
 }
 .signupContainer {
-  margin-top: 100px;
+  margin-top: 40px;
 }
 .signupContainer .headerMsg {
   margin: 20px;
