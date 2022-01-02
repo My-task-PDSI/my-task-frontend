@@ -1,5 +1,13 @@
 <template>
-  <TaskGroupNavBar @start-search="startSearch" />
+  <BaseNavBar bg-color="#feeee9">
+    <div class="user-info">
+      <Avatar />
+      <TheTitleAndDate/>
+    </div>
+    <Search @search="startSearch" />
+    <NotificationButton />
+  </BaseNavBar>
+
   <div class="task-menu-container">
     <h3>My Tasks</h3>
     <button @click="createNewGroup" class="plus-icon">
@@ -20,15 +28,23 @@
 </template>
 
 <script>
-import TaskGroupNavBar from "./TaskGroupNavBar.vue";
+import BaseNavBar from "../BaseNavBar.vue";
+import Avatar from "../Avatar.vue";
+import Search from "../Search.vue";
+import TheTitleAndDate from "../TheTitleAndDate.vue";
+import NotificationButton from "../NotificationButton.vue";
 import TaskGroupCard from "./TaskGroupCard.vue";
 import Api from "../../services/api";
 export default {
   name: "TaskGroupPage",
 
   components: {
-    TaskGroupNavBar,
     TaskGroupCard,
+    Avatar,
+    BaseNavBar,
+    NotificationButton,
+    Search,
+    TheTitleAndDate
   },
   data() {
     return {
@@ -109,5 +125,10 @@ export default {
 .task-menu-container > .plus-icon i {
   font-size: 20px;
   color: rgb(97, 171, 175);
+}
+.user-info {
+  display: flex;
+  width: 240px;
+  height: auto;
 }
 </style>
