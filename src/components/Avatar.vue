@@ -22,7 +22,7 @@ export default {
   justify-content: center;
   align-items: center;
 
-  height: 100%;
+  height: auto;
   width: 50px;
 }
 .avatar-container .img-container {
