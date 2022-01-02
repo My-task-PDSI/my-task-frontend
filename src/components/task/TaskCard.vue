@@ -36,7 +36,7 @@
         <h3 for="time">em {{ getDate }}</h3>
       </div>
       <div class="icons-button">
-        <ButtonEdit @click="toogleEdit">edit</ButtonEdit>
+        <ButtonEdit @click="goEdit">edit</ButtonEdit>
         <ButtonRemove @click="removeTask">remove</ButtonRemove>
       </div>
     </div>
@@ -92,14 +92,16 @@ export default {
   },
   methods: {
     removeTask() {},
-    toogleEdit() {
-      this.isEdit = !this.isEdit;
+    goEdit() {
+      this.isEdit = true;
     },
-    onSave(event) {
+    async onSave(event) {
       event.preventDefault();
     },
     onClose(event) {
       event.preventDefault();
+      this.isEdit = !this.isEdit;
+
     },
   },
 };

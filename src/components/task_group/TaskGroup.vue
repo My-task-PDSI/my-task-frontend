@@ -44,9 +44,10 @@ import NotificationButton from "../NotificationButton.vue";
 import TaskCard from "../task/TaskCard.vue";
 import TaskGroupFormEdit from "./TaskGroupFormEdit.vue";
 import Api from "../../services/api";
-import ButtonEdit from '../button/ButtonEdit.vue';
-import ButtonRemove from '../button/ButtonRemove.vue';
-import ButtonAdd from '../button/ButtonAdd.vue';
+import ButtonEdit from "../button/ButtonEdit.vue";
+import ButtonRemove from "../button/ButtonRemove.vue";
+import ButtonAdd from "../button/ButtonAdd.vue";
+import { randint } from "../../utils";
 export default {
   name: "TaskGroup",
   components: {
@@ -57,7 +58,7 @@ export default {
     TaskGroupFormEdit,
     ButtonAdd,
     ButtonEdit,
-    ButtonRemove
+    ButtonRemove,
   },
   data() {
     return {
@@ -83,7 +84,7 @@ export default {
       this.isEditing = false;
       let group = null;
       if (this.id === -1) {
-        this.id = 30;
+        this.id = randint(0, 1000);
         group = await Api.post("task-groups", {
           id: this.id,
           title: this.title,
