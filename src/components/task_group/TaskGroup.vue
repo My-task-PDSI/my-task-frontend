@@ -1,6 +1,6 @@
 <template>
   <div class="task-group-container">
-    <BaseNavBar>
+    <BaseNavBar bg-color="#edecf7">
       <Avatar />
       <NotificationButton />
     </BaseNavBar>
@@ -16,8 +16,8 @@
       </div>
       <div v-else class="container-title">
         <h1>{{ title }}</h1>
-        <button @click="openForm">edit</button>
-        <button @click="removeGroup">remove</button>
+        <ButtonEdit @click="openForm">edit</ButtonEdit>
+        <ButtonRemove @click="removeGroup">remove</ButtonRemove>
       </div>
     </div>
     <div class="tasks-container">
@@ -25,9 +25,7 @@
         <div class="info-title">
           <h3>Lista de tarefas</h3>
         </div>
-        <button class="plus-btn">
-          <i class="fas fa-plus"></i>
-        </button>
+        <ButtonAdd />
       </div>
       <div v-if="isFetchTasks" class="tasks-list">
         <h1>fetch tasks...</h1>
@@ -46,7 +44,9 @@ import NotificationButton from "../NotificationButton.vue";
 import TaskCard from "../task/TaskCard.vue";
 import TaskGroupFormEdit from "./TaskGroupFormEdit.vue";
 import Api from "../../services/api";
-import { addPrefixToObjectKey } from "../../utils";
+import ButtonEdit from '../button/ButtonEdit.vue';
+import ButtonRemove from '../button/ButtonRemove.vue';
+import ButtonAdd from '../button/ButtonAdd.vue';
 export default {
   name: "TaskGroup",
   components: {
@@ -55,6 +55,9 @@ export default {
     NotificationButton,
     TaskCard,
     TaskGroupFormEdit,
+    ButtonAdd,
+    ButtonEdit,
+    ButtonRemove
   },
   data() {
     return {
@@ -110,11 +113,7 @@ export default {
       this.description = dataGroup.description;
 
       const tasks = await Api.get(`tasks?id_group=${this.id}`);
-      this.tasks = tasks.data.reduce((acc, task) => {
-        const newValue = addPrefixToObjectKey(task);
-        acc.push(newValue);
-        return acc;
-      }, []);
+      this.tasks = tasks.data;
     }
     this.isFetchTasks = false;
   },
@@ -135,11 +134,12 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 10px;
+  padding: 0 20px;
 }
 .task-group-info .container-title > h1 {
-  text-align: center;
+  text-align: left;
   font-size: 30px;
+  flex-grow: 1;
 }
 .tasks-container {
   min-height: 80px;
@@ -147,7 +147,8 @@ export default {
   margin-bottom: 20px;
   border-radius: 16px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  padding: 0 20px;
+  padding: 20px;
+  padding-top: 10px;
 }
 .task-info-container {
   width: 100%;
@@ -155,19 +156,5 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.plus-btn {
-  border: 3px solid rgb(97, 171, 175);
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-}
-.plus-btn > i {
-  font-size: 16px;
-  color: rgb(97, 171, 175);
 }
 </style>

@@ -10,9 +10,7 @@
 
   <div class="task-menu-container">
     <h3>My Tasks</h3>
-    <button @click="createNewGroup" class="plus-icon">
-      <i class="fas fa-plus"></i>
-    </button>
+    <ButtonAdd @click="createNewGroup"/>
   </div>
   <div v-if="isFetchTaskGroups" class="task-groups-container">
     <h1>fetch groups</h1>
@@ -34,6 +32,7 @@ import Search from "../Search.vue";
 import TheTitleAndDate from "../TheTitleAndDate.vue";
 import NotificationButton from "../NotificationButton.vue";
 import TaskGroupCard from "./TaskGroupCard.vue";
+import ButtonAdd from "../button/ButtonAdd.vue";
 import Api from "../../services/api";
 export default {
   name: "TaskGroupPage",
@@ -44,7 +43,8 @@ export default {
     BaseNavBar,
     NotificationButton,
     Search,
-    TheTitleAndDate
+    TheTitleAndDate,
+    ButtonAdd
   },
   data() {
     return {
@@ -111,20 +111,6 @@ export default {
 }
 .task-menu-container > h3 {
   margin-right: 10px;
-}
-.task-menu-container > .plus-icon {
-  border: 4px solid rgb(97, 171, 175);
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-}
-.task-menu-container > .plus-icon i {
-  font-size: 20px;
-  color: rgb(97, 171, 175);
 }
 .user-info {
   display: flex;

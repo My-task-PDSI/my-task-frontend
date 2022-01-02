@@ -1,22 +1,27 @@
 <template>
-  <div class="task-group-card">
+  <div @click="openGroup" class="task-group-card">
     <div class="task-rect"></div>
     <div class="task-info-container">
       <h3>{{ propsTitle }}</h3>
     </div>
     <div class="task-icons-container">
-      <button @click="editGroup" class="btn-icon"><i class="far fa-edit"></i></button>
-      <button @click="removeGroup" class="btn-icon">
-        <i class="far fa-trash-alt"></i>
-      </button>
+      <ButtonEdit @click="editGroup" />
+      <ButtonRemove @click="removeGroup" />
     </div>
   </div>
 </template>
 
 <script>
 import Api from "../../services/api";
+import ButtonEdit from "../button/ButtonEdit.vue";
+import ButtonRemove from "../button/ButtonRemove.vue";
+
 export default {
   name: "TaskGroupCard",
+  components: {
+    ButtonEdit,
+    ButtonRemove,
+  },
   props: {
     propsTitle: String,
     propsId: Number,
@@ -32,7 +37,13 @@ export default {
     async editGroup() {
       this.$router.push({
         name: "group",
-        query: {id: this.propsId, edit:true},
+        query: { id: this.propsId, edit: true },
+      });
+    },
+    async openGroup() {
+      this.$router.push({
+        name: "group",
+        query: { id: this.propsId, edit: false },
       });
     },
   },
@@ -63,14 +74,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.btn-icon {
-  background-color: transparent;
-  border: none;
-}
-.btn-icon > i {
-  font-size: 20px;
-  color: rgb(97, 171, 175);
 }
 .task-info-container {
   width: 140px;
