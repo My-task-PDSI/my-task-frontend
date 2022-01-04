@@ -36,7 +36,7 @@ export default {
         Api.post("/auth", this.userLogged).then((response) => {
           console.log(response)
           // localStorage.username = this.userLogged.username
-          // this.$router.push("/task-group")
+          this.$router.push("/task-groups")
         }).catch((error) => {
           console.error(error)
           this.$notify({ type: "error", text: "Usuário não encontrado!" })
