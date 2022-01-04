@@ -32,8 +32,9 @@ export default {
     async removeGroup(event) {
       event.stopPropagation();
       const response = await Api.delete(`task-groups/${this.propsId}`);
-      console.log(response.status === 200);
-      this.$emit("remove", this.propsId);
+      if(response.status === 200){
+        this.$emit("remove", this.propsId);
+      }
     },
     async editGroup() {
       this.$router.push({
