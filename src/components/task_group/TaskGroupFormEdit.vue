@@ -3,102 +3,119 @@
     <form ref="formdata">
       <div class="input-container">
         <label for="title">Titulo:</label>
-        <input name="title" :value="title" type="text">
+        <input name="title" :value="title" type="text" />
       </div>
       <div class="input-container">
         <label for="description">Descrição: </label>
-        <textarea name="description" cols="30" rows="10" :value="description"></textarea>
+        <textarea
+          name="description"
+          cols="30"
+          rows="10"
+          :value="description"
+        ></textarea>
       </div>
-      <button @click="onSave">Save</button>
-      <button @click="onClose">Close</button>
+
+      <div class="button-container">
+        <button @click="onSave" class="btn">Save</button>
+        <button @click="onClose" class="btn">Close</button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
-//import Api from "../../services/api";
 export default {
   name: "TaskGroupFormEdit",
-  props:{
-    id:{
-      type:Number,
-      required:true
+  props: {
+    id: {
+      type: Number,
+      required: true,
     },
-    title:{
+    title: {
       type: String,
-      required:true
+      required: true,
     },
-    description:{
-      type:String,
-      required:true
-    }
+    description: {
+      type: String,
+      required: true,
+    },
   },
-  emits:['save','close'],
-  methods:{
-    onSave(event){
+  emits: ["save", "close"],
+  methods: {
+    onSave(event) {
       event.preventDefault();
-      const formdata = this.$refs.formdata
+      const formdata = this.$refs.formdata;
       const data = {
-        title:formdata.title.value,
-        description:formdata.description.value,
-      }
-      this.$emit('save',data);
+        title: formdata.title.value,
+        description: formdata.description.value,
+      };
+      this.$emit("save", data);
     },
-    onClose(event){
+    onClose(event) {
       event.preventDefault();
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };
 </script>
 
 <style scoped>
-.task-group-container {
+.form-container {
   width: 100%;
-  min-height: 100vh;
-}
-.task-group-info {
-  display: flex;
-}
-.task-group-info .container-title {
-  height: 60px;
-  width: 100%;
+  height: 100%;
+
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
-.task-group-info .container-title > h1 {
-  text-align: center;
-  font-size: 30px;
-}
-.tasks-container {
-  min-height: 80px;
-  margin: 0 20px;
-  margin-bottom: 20px;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  padding: 0 20px;
-}
-.task-info-container {
+.form-container form {
   width: 100%;
-  height: 80px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: left;
 }
-.plus-btn {
-  border: 3px solid rgb(97, 171, 175);
-  height: 35px;
-  width: 35px;
-  border-radius: 50%;
+.input-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
+  justify-content: left;
+  flex-direction: column;
+  align-items: left;
 }
-.plus-btn > i {
-  font-size: 16px;
-  color: rgb(97, 171, 175);
+.input-container > label {
+  font-weight: bolder;
+  letter-spacing: 1.5px;
+}
+.input-container > input {
+  height: 40px;
+  border-radius: 10px;
+  padding-left: 10px;
+  border-width: 1px;
+  border-style: solid;
+}
+.input-container > input:focus,
+.input-container > textarea:focus {
+  outline-color: rgb(97, 171, 175);
+}
+.button-container {
+  width: 100%;
+  min-height: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.btn {
+  height: 30px;
+  width: 80px;
+  border-style: none;
+  border-radius: 10px;
+  background-color: rgb(97, 171, 175);
+  font-size: 18px;
+  font-weight: bolder;
+  color: rgba(255, 255, 255, 0.904);
 }
 </style>

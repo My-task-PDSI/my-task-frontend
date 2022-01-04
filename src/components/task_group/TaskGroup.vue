@@ -31,7 +31,15 @@
         <h1>fetch tasks...</h1>
       </div>
       <div else class="tasks-list">
-        <TaskCard v-for="(task, index) in tasks" :="task" :key="index" />
+        <TaskCard v-for="task in tasks"
+        :key="task.id"
+        :id="task.id" 
+        :idGroup="task.id_group" 
+        :title="task.title" 
+        :description="task.description" 
+        :time="task.time"
+        @deleted="onDeleteTask"
+        />
       </div>
     </div>
   </div>
@@ -78,6 +86,9 @@ export default {
       this.isEditing = false;
     },
     async removeGroup() {},
+    onDeleteTask(idTask) {
+      this.tasks = this.tasks.filter(task=>task.id !== idTask);
+    },
     async saveData(data) {
       this.title = data.title;
       this.description = data.description;
@@ -97,7 +108,7 @@ export default {
         });
       }
       if (group.status === 200) {
-        console.log("atualizado");
+        console.log("grupo atualizado");
       }
     },
   },
@@ -115,6 +126,7 @@ export default {
 
       const tasks = await Api.get(`tasks?id_group=${this.id}`);
       this.tasks = tasks.data;
+      console.log(tasks.data)
     }
     this.isFetchTasks = false;
   },
@@ -126,15 +138,21 @@ export default {
   width: 100%;
   min-height: 100vh;
 }
+.task-group-info .container{
+  width: 100%;
+  display: flex;
+}
 .task-group-info {
+  width: 100%;
   display: flex;
 }
 .task-group-info .container-title {
-  height: 60px;
+  min-height: 60px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   padding: 0 20px;
 }
 .task-group-info .container-title > h1 {
@@ -153,9 +171,10 @@ export default {
 }
 .task-info-container {
   width: 100%;
-  height: 80px;
+  min-height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 </style>
