@@ -1,37 +1,14 @@
 <template>
   <div class="task-card">
-    <div v-if="isEdit" class="form-container">
-      <!-- <form>
-        <div class="task-title-container">
-          <label for="title">Title</label>
-          <input type="text" name="title" :value="title" />
-        </div>
-        <div class="task-description-container">
-          <label for="description">Description</label>
-          <textarea
-            name="description"
-            id=""
-            cols="30"
-            rows="10"
-            :value="description"
-          ></textarea>
-          <button @click="onSave">Save</button>
-          <button @click="onClose">Close</button>
-        </div>
-        <div class="task-time-container">
-          <label for="time">Time</label>
-          <input type="datetime-local" name="time" :value="time" />
-        </div>
-      </form> -->
-      <TaskCardFormEdit
-        :id="localId"
-        :title="localTitle"
-        :description="localDescription"
-        :time="localTime"
-        @save="onSave"
-        @close="onClose"
-      />
-    </div>
+    <TaskCardFormEdit
+      v-if="isEdit"
+      :id="localId"
+      :title="localTitle"
+      :description="localDescription"
+      :time="localTime"
+      @save="onSave"
+      @close="onClose"
+    />
     <div v-else class="task-container">
       <TheCheckBox :status="isCompleted" :checkmark="isBlocked" />
       <div class="task-title-container">
@@ -66,7 +43,7 @@ export default {
     TheCheckBox,
     TaskCardFormEdit,
   },
-  emits:['deleted'],
+  emits: ["deleted"],
   props: {
     id: Number,
     idGroup: Number,
@@ -78,16 +55,16 @@ export default {
       default: "not-completed",
     },
   },
-    data() {
-      return {
-        isEdit: false,
-        localId: this.id,
-        localTitle: this.title,
-        localDescription: this.description,
-        localTime: this.time,
-        localStatus: this.status,
-      };
-    },
+  data() {
+    return {
+      isEdit: false,
+      localId: this.id,
+      localTitle: this.title,
+      localDescription: this.description,
+      localTime: this.time,
+      localStatus: this.status,
+    };
+  },
   computed: {
     isCompleted() {
       return this.localStatus === "completed";
@@ -105,7 +82,8 @@ export default {
     },
     getTime() {
       const time = this.localTime;
-      return time.replace(/.*T(.*){8}.*/, "$1");
+      console.log(this.localTime, time.replace(/.*T(.{5}).*/, "$1"));
+      return time.replace(/.*T(.{5}).*/, "$1");
     },
   },
   methods: {
@@ -114,7 +92,7 @@ export default {
       if (response.status === 200) {
         console.log("task removida");
       }
-      this.$emit('deleted',this.localId);
+      this.$emit("deleted", this.localId);
     },
     goEdit() {
       this.isEdit = true;
@@ -130,13 +108,13 @@ export default {
         this.localId = randint(0, 1000);
         task = await Api.post("tasks", {
           id: this.localId,
-          id_group:this.idGroup,
+          id_group: this.idGroup,
           title: this.localTitle,
           description: this.localDescription,
           time: this.localTime,
         });
       } else {
-        console.log('fazendo put')
+        console.log("fazendo put");
         task = await Api.put(`tasks/${this.localId}`, {
           title: this.localTitle,
           id_group: this.idGroup,
@@ -182,9 +160,5 @@ h3 {
 }
 .task-time-container {
   margin-right: 10px;
-}
-.icons-button {
-  display: flex;
-  justify-self: flex-end;
 }
 </style>
