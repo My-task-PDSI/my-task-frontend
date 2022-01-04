@@ -82,7 +82,6 @@ export default {
     },
     getTime() {
       const time = this.localTime;
-      console.log(this.localTime, time.replace(/.*T(.{5}).*/, "$1"));
       return time.replace(/.*T(.{5}).*/, "$1");
     },
   },
@@ -114,7 +113,6 @@ export default {
           time: this.localTime,
         });
       } else {
-        console.log("fazendo put");
         task = await Api.put(`tasks/${this.localId}`, {
           title: this.localTitle,
           id_group: this.idGroup,

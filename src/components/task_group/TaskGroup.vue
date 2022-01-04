@@ -126,7 +126,6 @@ export default {
 
       const tasks = await Api.get(`tasks?id_group=${this.id}`);
       this.tasks = tasks.data;
-      console.log(tasks.data)
     }
     this.isFetchTasks = false;
   },
