@@ -3,7 +3,9 @@
     <img src="../../assets/wallpaper.jpeg" alt="">
     <div class="landing">
       <h2>ORGANIZE SEU DIA COM O MY TASKS</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum dictum tempus, interdum at dignissim metus. Ultricies.</p>
+      <p>O My Tasks é uma plataforma para gerenciamento de tarefas. Aqui você pode ter um melhor 
+        controle sobre suas atividades de casa, tabalho e o que mais desejar. 
+        Clique no botão abaixo para entrar no sistema.</p>
       <router-link to="/login"> <ButtonComp msg="Get Started"/> </router-link>
     </div>
   </div>
