@@ -31,15 +31,10 @@
         <h1>fetch tasks...</h1>
       </div>
       <div else class="tasks-list">
-        <TaskCard v-for="task in tasks"
-        :key="task.id"
-        :id="task.id" 
-        :idGroup="task.id_group" 
-        :title="task.title" 
-        :description="task.description" 
-        :time="task.time"
-        @deleted="onDeleteTask"
-        />
+        <!-- <div v-for="(task, index) in tasks" :="task" :key="index">
+          <h2>{{ task.title }}</h2>
+        </div> -->
+        <TaskCard v-for="(task, index) in tasks" :="task" :key="index" />
       </div>
     </div>
   </div>
@@ -86,9 +81,6 @@ export default {
       this.isEditing = false;
     },
     async removeGroup() {},
-    onDeleteTask(idTask) {
-      this.tasks = this.tasks.filter(task=>task.id !== idTask);
-    },
     async saveData(data) {
       this.title = data.title;
       this.description = data.description;
@@ -108,7 +100,7 @@ export default {
         });
       }
       if (group.status === 200) {
-        console.log("grupo atualizado");
+        console.log("atualizado");
       }
     },
   },
@@ -118,14 +110,16 @@ export default {
     this.isEditing = create === "true" || edit === "true";
 
     if (create !== "true" || this.id !== -1) {
-      const group = await Api.get(`task-groups?id=${this.id}`);
+      const group = await Api.get(`task-groups/${this.id}`);
       const [dataGroup] = group.data;
       this.id = dataGroup.id;
       this.title = dataGroup.title;
       this.description = dataGroup.description;
 
-      const tasks = await Api.get(`tasks?id_group=${this.id}`);
+      const tasks = await Api.get(`task-groups/tasks/${this.id}`);
       this.tasks = tasks.data;
+
+      console.log(tasks);
     }
     this.isFetchTasks = false;
   },
@@ -137,21 +131,15 @@ export default {
   width: 100%;
   min-height: 100vh;
 }
-.task-group-info .container{
-  width: 100%;
-  display: flex;
-}
 .task-group-info {
-  width: 100%;
   display: flex;
 }
 .task-group-info .container-title {
-  min-height: 60px;
+  height: 60px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
   padding: 0 20px;
 }
 .task-group-info .container-title > h1 {
@@ -170,10 +158,9 @@ export default {
 }
 .task-info-container {
   width: 100%;
-  min-height: 80px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
 }
 </style>

@@ -64,7 +64,7 @@ export default {
     },
   },
   async mounted() {
-    const taskGroups = await Api.get("task-groups");
+    const taskGroups = await Api.get("task-groups/all");
     this.taskGroups = taskGroups.data.reduce((acc, task) => {
       const newValue = Object.entries(task).reduce((acc, [key, value]) => {
         acc["props-" + key] = value;

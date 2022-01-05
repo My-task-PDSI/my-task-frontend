@@ -49,7 +49,7 @@ export default {
     idGroup: Number,
     title: String,
     description: String,
-    time: String,
+    creationDate: String,
     status: {
       type: String,
       default: "not-completed",
@@ -61,7 +61,7 @@ export default {
       localId: this.id,
       localTitle: this.title,
       localDescription: this.description,
-      localTime: this.time,
+      localTime: this.creationDate,
       localStatus: this.status,
     };
   },

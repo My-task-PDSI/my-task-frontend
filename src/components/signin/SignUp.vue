@@ -39,7 +39,7 @@ export default {
       } else if (this.newUser.password != this.newUser.confirmPassword) {
           this.$notify({ type: "error", text: "Senhas devem ser iguais!" })
       } else {
-        Api.post("/signup", this.newUser).then((response) => {
+        Api.post("user/signup", this.newUser).then((response) => {
           console.log(response);
           if (response.status == 200) {
             this.$notify({ type: "success", text: "Cadastro realizado com sucesso!" })

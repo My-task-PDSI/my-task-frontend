@@ -15,7 +15,7 @@ const routes = [
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   {path: "/task-groups", component:TaskGroupPage },
-  { path: "/task-groups/group/", component: TaskGroup , name:'group'},
+  { path: "/task-groups/tasks/", component: TaskGroup , name:'group'},
 ];
 
 const router = createRouter({

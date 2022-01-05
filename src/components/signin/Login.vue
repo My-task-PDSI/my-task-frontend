@@ -33,7 +33,7 @@ export default {
       if( this.userLogged.username == "" || this.userLogged.password == "" ) {
         this.$notify({ type: "error", text: "Preencha todos os campos!" })
       } else {
-        Api.post("/auth", this.userLogged).then((response) => {
+        Api.post("user/login", this.userLogged).then((response) => {
           console.log(response)
           // localStorage.username = this.userLogged.username
           this.$router.push("/task-groups")
