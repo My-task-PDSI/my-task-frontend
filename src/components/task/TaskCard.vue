@@ -5,19 +5,23 @@
       :id="localId"
       :title="localTitle"
       :description="localDescription"
-      :time="localTime"
+      :currentTime="localCurrentTime"
       @save="onSave"
       @close="onClose"
     />
     <div v-else class="task-container">
-      <TheCheckBox :status="isCompleted" :checkmark="isBlocked" />
+      <TheCheckBox
+        @click="toogleStatus"
+        :checked="isCompleted"
+        :checkmark="isBlocked"
+      />
       <div class="task-title-container">
         <h3 for="title">{{ localTitle }}</h3>
       </div>
-      <div class="task-time-container">
+      <div v-if="currentTime" class="task-time-container">
         <h3 for="time">as {{ getTime }}</h3>
       </div>
-      <div class="task-time-container">
+      <div v-if="currentTime" class="task-time-container">
         <h3 for="time">em {{ getDate }}</h3>
       </div>
       <div class="buttons">
@@ -34,7 +38,6 @@ import ButtonRemove from "../button/ButtonRemove.vue";
 import TheCheckBox from "../TheCheckBox.vue";
 import TaskCardFormEdit from "./TaskCardFormEdit.vue";
 import Api from "../../services/api";
-import { randint } from "../../utils";
 export default {
   name: "Task",
   components: {
@@ -50,9 +53,16 @@ export default {
     title: String,
     description: String,
     creationDate: String,
+    updatedDate: String,
+    currentTime: {
+      type: String,
+      default: "",
+      required: false,
+    },
     status: {
       type: String,
       default: "not-completed",
+      required: false,
     },
   },
   data() {
@@ -61,8 +71,8 @@ export default {
       localId: this.id,
       localTitle: this.title,
       localDescription: this.description,
-      localTime: this.creationDate,
-      localStatus: this.status,
+      localCurrentTime: this.currentTime ?? "",
+      localStatus: this.status ?? "not-completed",
     };
   },
   computed: {
@@ -70,28 +80,33 @@ export default {
       return this.localStatus === "completed";
     },
     isBlocked() {
-      return this.localStatus !== "blocked";
-    },
-    formatedTime() {
-      const time = this.localTime;
-      return time.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
+      return this.localStatus === "blocked";
     },
     getDate() {
-      const time = this.localTime;
-      return time.replace(/(\d{4})-(\d{2})-(\d{2}).*/, "$3 / $2 / $1");
+      const date = new Date(this.currentTime);
+      const stringDate = date.toLocaleDateString();
+      return stringDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$1 / $2/ $3");
     },
     getTime() {
-      const time = this.localTime;
-      return time.replace(/.*T(.{5}).*/, "$1");
+      const date = new Date(this.currentTime);
+      const time = date.toLocaleTimeString().slice(0, 5);
+      return time;
     },
   },
   methods: {
     async removeTask() {
-      const response = await Api.delete(`tasks/${this.localId}`);
+      
+      const response = await Api.delete(`task/${this.localId}`);
       if (response.status === 200) {
         console.log("task removida");
       }
       this.$emit("deleted", this.localId);
+    },
+    toogleStatus() {
+      if (!this.isBlocked) {
+        this.localStatus =
+          this.localStatus === "completed" ? "not-completed" : "completed";
+      }
     },
     goEdit() {
       this.isEdit = true;
@@ -99,28 +114,33 @@ export default {
     async onSave(data) {
       this.localTitle = data.title;
       this.localDescription = data.description;
-      this.localTime = data.time;
+      this.localCurrentTime = data.time;
       this.isEditing = false;
-      let task = null;
+      let response = null;
 
       if (this.localId === -1) {
-        this.localId = randint(0, 1000);
-        task = await Api.post("tasks", {
-          id: this.localId,
-          id_group: this.idGroup,
-          title: this.localTitle,
-          description: this.localDescription,
-          time: this.localTime,
+        response = await Api.post("task", {
+          task: {
+            title: this.localTitle,
+            idGroup: this.idGroup,
+            description: this.localDescription,
+            status: this.localStatus,
+            currentTime: this.localCurrentTime,
+          },
         });
       } else {
-        task = await Api.put(`tasks/${this.localId}`, {
-          title: this.localTitle,
-          id_group: this.idGroup,
-          description: this.localDescription,
-          time: this.localTime,
+        response = await Api.put("task", {
+          task: {
+            id: this.localId,
+            title: this.localTitle,
+            idGroup: this.idGroup,
+            description: this.localDescription,
+            status: this.localStatus,
+            currentTime: this.localCurrentTime,
+          },
         });
       }
-      if (task.status === 200) {
+      if (response.status === 200) {
         console.log("task atualizada");
       }
     },

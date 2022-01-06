@@ -14,14 +14,15 @@
           :value="description"
         ></textarea>
       </div>
-      <div class="input-container">
+      <div v-if="enableTimeInput" class="input-container">
         <label for="time">Time</label>
-        <input type="datetime-local" name="time" :value="time" />
+        <input type="datetime-local" name="time" :value="dateTimeFormat" />
       </div>
 
       <div class="button-container">
         <button @click="onSave" class="btn">Save</button>
         <button @click="onClose" class="btn">Close</button>
+        <button @click="toogleEditTime" class="btn">{{textBtnTime}}</button>
       </div>
     </form>
   </div>
@@ -43,12 +44,25 @@ export default {
       type: String,
       required: true,
     },
-    time: {
+    currentTime: {
       type: String,
-      required: true,
     },
   },
-  emits: ["save", "close"],
+  emits: ["save", "close", "toogleEditTime"],
+  data() {
+    return {
+      enableTimeInput: false,
+      textBtnTime: 'Edit time',
+    };
+  },
+  computed: {
+    dateTimeFormat() {
+      if(!this.currentTime) return '';
+      const date = new Date(this.currentTime);
+      const datetime = date.toLocaleString();
+      return datetime.slice(0, 16).replace(/(\d{2})\/(\d{2})\/(\d{4}).{1}(.*)/,'$3-$2-$1T$4');
+    },
+  },
   methods: {
     onSave(event) {
       event.preventDefault();
@@ -56,13 +70,18 @@ export default {
       const data = {
         title: formdata.title.value,
         description: formdata.description.value,
-        time: formdata.time.value,
+        currentTime: (this.enableTimeInput && formdata.time.value)? formdata.time.value : null,
       };
       this.$emit("save", data);
     },
     onClose(event) {
       event.preventDefault();
       this.$emit("close");
+    },
+    toogleEditTime(event) {
+      event.preventDefault();
+      this.textBtnTime = (this.enableTimeInput) ? 'Edit time':'Remove time';
+      this.enableTimeInput = !this.enableTimeInput;
     },
   },
 };
@@ -117,7 +136,7 @@ export default {
 }
 .btn {
   height: 30px;
-  width: 80px;
+  min-width: 120px;
   border-style: none;
   border-radius: 10px;
   background-color: rgb(97, 171, 175);
