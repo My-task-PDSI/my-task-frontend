@@ -18,8 +18,9 @@
   <div else class="task-groups-container">
     <TaskGroupCard
       v-for="group in filtredGroups"
-      :="group"
-      :key="group.propsId"
+      :id="group.id"
+      :title="group.title"
+      :key="group.id"
       @remove="onRemove"
     />
   </div>
@@ -58,21 +59,14 @@ export default {
       const searchValue = this.searchValue.toLowerCase()
       const compare = searchValue===''
       return this.taskGroups.filter((group) => {
-        const title = group["props-title"].toLowerCase()
+        const title = group.title.toLowerCase()
         return compare || title.includes(searchValue);
       });
     },
   },
   async mounted() {
     const taskGroups = await Api.get("task-groups/all");
-    this.taskGroups = taskGroups.data.reduce((acc, task) => {
-      const newValue = Object.entries(task).reduce((acc, [key, value]) => {
-        acc["props-" + key] = value;
-        return acc;
-      }, {});
-      acc.push(newValue);
-      return acc;
-    }, []);
+    this.taskGroups = taskGroups.data;
     this.isFetchTaskGroups = false;
   },
   methods: {
@@ -80,9 +74,7 @@ export default {
       this.$router.push({ name: "group", query: { create:true } });
     },
     onRemove(id) {
-      this.taskGroups = this.taskGroups.filter(
-        (group) => group["props-id"] !== id
-      );
+      this.taskGroups = this.taskGroups.filter(group => group.id !== id);
     },
     startSearch(value) {
       this.searchValue = value;

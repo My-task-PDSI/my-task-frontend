@@ -31,10 +31,10 @@
         <h1>fetch tasks...</h1>
       </div>
       <div else class="tasks-list">
-        <!-- <div v-for="(task, index) in tasks" :="task" :key="index">
-          <h2>{{ task.title }}</h2>
-        </div> -->
-        <TaskCard v-for="(task, index) in tasks" :="task" :key="index" />
+        <TaskCard v-for="task in tasks"
+        :="task"
+        :key="task.id"
+        @deleted="deleteTask"/>
       </div>
     </div>
   </div>
@@ -81,6 +81,9 @@ export default {
       this.isEditing = false;
     },
     async removeGroup() {},
+    async deleteTask(id) {
+      this.tasks = this.tasks.filter(task => task.id !== id);
+    },
     async saveData(data) {
       this.title = data.title;
       this.description = data.description;
@@ -118,8 +121,6 @@ export default {
 
       const tasks = await Api.get(`task-groups/tasks/${this.id}`);
       this.tasks = tasks.data;
-
-      console.log(tasks);
     }
     this.isFetchTasks = false;
   },

@@ -2,7 +2,7 @@
   <div @click="openGroup" class="task-group-card">
     <div class="task-rect"></div>
     <div class="task-info-container">
-      <h3>{{ propsTitle }}</h3>
+      <h3>{{ title }}</h3>
     </div>
     <div class="task-icons-container">
       <ButtonEdit @click="editGroup" />
@@ -23,29 +23,28 @@ export default {
     ButtonRemove,
   },
   props: {
-    propsTitle: String,
-    propsId: Number,
-    propsDescription: String,
+    title: String,
+    id: Number
   },
   emits: ["remove"],
   methods: {
     async removeGroup(event) {
       event.stopPropagation();
-      const response = await Api.delete(`task-groups/${this.propsId}`);
+      const response = await Api.delete(`task-groups/${this.id}`);
       if(response.status === 200){
-        this.$emit("remove", this.propsId);
+        this.$emit("remove", this.id);
       }
     },
     async editGroup() {
       this.$router.push({
         name: "group",
-        query: { id: this.propsId, edit: true },
+        query: { id: this.id, edit: true },
       });
     },
     async openGroup() {
       this.$router.push({
         name: "group",
-        query: { id: this.propsId, edit: false },
+        query: { id: this.id, edit: false },
       });
     },
   },
