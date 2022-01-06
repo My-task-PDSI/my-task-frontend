@@ -1,8 +1,8 @@
 <template>
   <div @click="onClick" class="checkbox no-user-select" ref="checkbox">
     <div v-if="isChecked">
-      <span v-if="checkmark" class="v-check"> &#10003; </span>
-      <span v-else class="x-check"> &#10005; </span>
+      <span v-if="blocked" class="x-check"> &#10005; </span>
+      <span v-else class="v-check"> &#10003; </span>
     </div>
   </div>
 </template>
@@ -15,17 +15,19 @@ export default {
       type: Boolean,
       default: false,
     },
-    checkmark: {
+    blocked: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data() {
-    return { isChecked: false };
+    return { isChecked: this.checked || this.blocked };
   },
   methods: {
     onClick() {
-      this.isChecked = !this.isChecked;
+      if(!this.blocked){
+        this.isChecked = !this.isChecked;
+      }
     },
   },
 };
