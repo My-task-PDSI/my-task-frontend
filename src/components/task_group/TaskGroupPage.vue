@@ -52,6 +52,7 @@ export default {
     return {
       taskGroups: [],
       isFetchTaskGroups: true,
+      idUser: -1,
       searchValue: "",
     };
   },
@@ -69,12 +70,13 @@ export default {
     const idUser = this.$store.state.user.id;
     console.log('iduser', idUser);
     const taskGroups = await Api.get(`task-groups/user/${idUser}`);
+    this.idUser = idUser;
     this.taskGroups = taskGroups.data;
     this.isFetchTaskGroups = false;
   },
   methods: {
     createNewGroup() {
-      this.$router.push({ name: "group", query: { create:true , idUser:1} });
+      this.$router.push({ name: "group", query: { create:true , idUser:this.idUser} });
     },
     onRemove(id) {
       this.taskGroups = this.taskGroups.filter(group => group.id !== id);
