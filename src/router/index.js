@@ -7,6 +7,7 @@ import Contact from '../components/landing/Contact.vue'
 import TaskGroupPage from '../components/task_group/TaskGroupPage.vue'
 import TaskGroup from '../components/task_group/TaskGroup.vue'
 
+const publicPages = ['/about','/contact','/login','/signup'];
 const routes = [
 
   { path: '/', component: HomePage },
@@ -22,5 +23,14 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+router.beforeEach((to, _ , next) => {
 
+  const isPublicPage = publicPages.includes(to.path);
+  const authenticate= localStorage.getItem('mystask-loggedin');
+  if(isPublicPage || authenticate==='true'){
+    next();
+  }else{
+    next('/login');
+  }
+})
 export default router;
