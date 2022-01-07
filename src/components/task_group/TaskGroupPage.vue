@@ -66,7 +66,9 @@ export default {
     },
   },
   async mounted() {
-    const taskGroups = await Api.get("task-groups/all");
+    const idUser = this.$store.state.user.id;
+    console.log('iduser', idUser);
+    const taskGroups = await Api.get(`task-groups/user/${idUser}`);
     this.taskGroups = taskGroups.data;
     this.isFetchTaskGroups = false;
   },

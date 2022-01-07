@@ -143,6 +143,7 @@ export default {
       if (response.status === 200) {
         console.log("task atualizada");
       }
+      this.isEdit = false;
     },
     onClose() {
       this.isEdit = false;
