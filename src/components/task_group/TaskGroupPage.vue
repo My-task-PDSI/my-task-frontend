@@ -20,6 +20,7 @@
       v-for="group in filtredGroups"
       :id="group.id"
       :title="group.title"
+      :id-user="group.idUser"
       :key="group.id"
       @remove="onRemove"
     />
@@ -71,7 +72,7 @@ export default {
   },
   methods: {
     createNewGroup() {
-      this.$router.push({ name: "group", query: { create:true } });
+      this.$router.push({ name: "group", query: { create:true , idUser:1} });
     },
     onRemove(id) {
       this.taskGroups = this.taskGroups.filter(group => group.id !== id);

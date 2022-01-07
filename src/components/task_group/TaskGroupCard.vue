@@ -24,27 +24,28 @@ export default {
   },
   props: {
     title: String,
-    id: Number
+    id: Number,
+    idUser: Number,
   },
   emits: ["remove"],
   methods: {
     async removeGroup(event) {
       event.stopPropagation();
       const response = await Api.delete(`task-groups/${this.id}`);
-      if(response.status === 200){
+      if (response.status === 200) {
         this.$emit("remove", this.id);
       }
     },
     async editGroup() {
       this.$router.push({
         name: "group",
-        query: { id: this.id, edit: true },
+        query: { id: this.id, edit: true, idUser: this.idUser },
       });
     },
     async openGroup() {
       this.$router.push({
         name: "group",
-        query: { id: this.id, edit: false },
+        query: { id: this.id, edit: false, idUser: this.idUser },
       });
     },
   },

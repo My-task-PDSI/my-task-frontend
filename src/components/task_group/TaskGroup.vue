@@ -31,28 +31,29 @@
         <h1>fetch tasks...</h1>
       </div>
       <div else class="tasks-list">
-        <TaskCard v-for="task in tasks"
-        :="task"
-        :key="task.id"
-        @deleted="deleteTask"/>
+        <TaskCard
+          v-for="task in tasks"
+          :="task"
+          :key="task.id"
+          @deleted="deleteTask"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Avatar from "../Avatar.vue";
-import BaseNavBar from "../BaseNavBar.vue";
-import NotificationButton from "../NotificationButton.vue";
-import TaskCard from "../task/TaskCard.vue";
-import TaskGroupFormEdit from "./TaskGroupFormEdit.vue";
-import Api from "../../services/api";
-import ButtonEdit from "../button/ButtonEdit.vue";
-import ButtonRemove from "../button/ButtonRemove.vue";
-import ButtonAdd from "../button/ButtonAdd.vue";
-import { randint } from "../../utils";
+import Avatar from '../Avatar.vue';
+import BaseNavBar from '../BaseNavBar.vue';
+import NotificationButton from '../NotificationButton.vue';
+import TaskCard from '../task/TaskCard.vue';
+import TaskGroupFormEdit from './TaskGroupFormEdit.vue';
+import Api from '../../services/api';
+import ButtonEdit from '../button/ButtonEdit.vue';
+import ButtonRemove from '../button/ButtonRemove.vue';
+import ButtonAdd from '../button/ButtonAdd.vue';
 export default {
-  name: "TaskGroup",
+  name: 'TaskGroup',
   components: {
     Avatar,
     BaseNavBar,
@@ -66,6 +67,7 @@ export default {
   data() {
     return {
       id: -1,
+      idUser: -1,
       title: "",
       description: "",
       tasks: [],
@@ -80,39 +82,59 @@ export default {
     closeForm() {
       this.isEditing = false;
     },
-    async removeGroup() {},
+    async removeGroup() {
+      if(this.id > -1){
+        const response = await Api.delete(`task-groups/${this.id}`);
+        if (response.status === 200) {
+          console.log('grupo removido');
+        this.$router.replace({name: 'task-groups'});
+        }
+      }
+    },
     async deleteTask(id) {
-      this.tasks = this.tasks.filter(task => task.id !== id);
+      this.tasks = this.tasks.filter((task) => task.id !== id);
+    },
+    async saveNewGroup() {
+
+      let response = await Api.post('task-groups', {
+          idUser: this.idUser,
+          title: this.title,
+          description: this.description,
+        });
+      if (response.status === 200) {
+        this.id = response.data.id;
+        console.log('grupo criado');
+      }
+    },
+    async updateGroup() {
+
+      let response = await Api.put(`task-groups/${this.id}`, {
+          title: this.title,
+          description: this.description,
+      });
+      if (response.status === 200) {
+        console.log('grupo atualizado');
+      }
     },
     async saveData(data) {
       this.title = data.title;
       this.description = data.description;
       this.isEditing = false;
-      let group = null;
+      console.log('id',this.id);
       if (this.id === -1) {
-        this.id = randint(0, 1000);
-        group = await Api.post("task-groups", {
-          id: this.id,
-          title: this.title,
-          description: this.description,
-        });
+        this.saveNewGroup();
       } else {
-        group = await Api.put(`task-groups/${this.id}`, {
-          title: this.title,
-          description: this.description,
-        });
-      }
-      if (group.status === 200) {
-        console.log("atualizado");
+        this.updateGroup();
       }
     },
   },
   async mounted() {
-    const { edit, id, create } = this.$route.query;
-    this.id = create === "true" ? -1 : +id;
-    this.isEditing = create === "true" || edit === "true";
+    const { edit, id, create, idUser } = this.$route.query;
+    this.id = create === 'true' ? -1 : +id;
+    this.idUser = idUser;
+    this.isEditing = create === 'true' || edit === 'true';
 
-    if (create !== "true" || this.id !== -1) {
+    if (create !== 'true' && this.id !== -1) {
       const group = await Api.get(`task-groups/${this.id}`);
       const [dataGroup] = group.data;
       this.id = dataGroup.id;
@@ -134,6 +156,13 @@ export default {
 }
 .task-group-info {
   display: flex;
+}
+.task-group-info .container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px;
 }
 .task-group-info .container-title {
   height: 60px;
