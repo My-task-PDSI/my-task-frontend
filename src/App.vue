@@ -2,7 +2,16 @@
   <notifications position="top right" class="my-notification" />
   <router-view />
 </template>
+<script>
 
+export default {
+  name:'App',
+  async mounted(){
+    console.log('app montado', this.$store.state);
+    await this.$store.dispatch('initCheckAuthenticate');
+  }
+}
+    </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap");
 

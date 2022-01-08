@@ -7,7 +7,7 @@ import Contact from '../components/landing/Contact.vue'
 import TaskGroupPage from '../components/task_group/TaskGroupPage.vue'
 import TaskGroup from '../components/task_group/TaskGroup.vue'
 
-const publicPages = ['/about','/contact','/login','/signup'];
+const publicPages = ['/about', '/contact', '/login', '/signup'];
 const routes = [
 
   { path: '/', component: HomePage },
@@ -15,21 +15,21 @@ const routes = [
   { path: '/signup', component: SignUp },
   { path: '/about', component: About },
   { path: '/contact', component: Contact },
-  {path: '/task-groups', name:'task-groups', component:TaskGroupPage },
-  { path: '/task-groups/tasks/', component: TaskGroup , name:'group'},
+  { path: '/task-groups', name: 'task-groups', component: TaskGroupPage },
+  { path: '/task-groups/tasks/', component: TaskGroup, name: 'group' },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-router.beforeEach((to, _ , next) => {
+router.beforeEach((to, _, next) => {
 
   const isPublicPage = publicPages.includes(to.path);
-  const authenticate= localStorage.getItem('mystask-loggedin');
-  if(isPublicPage || authenticate==='true'){
+  const authenticate = sessionStorage.getItem('mystask-loggedin');
+  if (isPublicPage || authenticate === 'true') {
     next();
-  }else{
+  } else {
     next('/login');
   }
 })

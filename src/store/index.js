@@ -10,7 +10,7 @@ const store = createStore({
 	mutations: {
 		setloggedIn(state, value) {
 			state.loggedIn = value;
-			localStorage.setItem('mystask-loggedin', JSON.stringify(value));
+			sessionStorage.setItem('mystask-loggedin', JSON.stringify(value));
 		},
 		setUser(state, user) {
 			state.user = user;
@@ -19,19 +19,20 @@ const store = createStore({
 		logout(state){
 			state.user = null;
 			state.loggedIn = false;
-			localStorage.removeItem('mystask-loggedin');
+			sessionStorage.removeItem('mystask-loggedin');
 			localStorage.removeItem('mystask-user');
 		}
 	},
 	actions:{
-		async checkAuth({commit}){
+		async initCheckAuthenticate({commit}){
 			try {
 				const user = JSON.parse(localStorage.getItem('mystask-user'));
+				console.log('user localStorage', user);
 				const response  = await Api.post('user/login',{
-					username:'user0',
-					password:'pwd0',
+					username: user.username,
+					password: user.password,
 				})
-				if(response.status === 2 ){
+				if(response.status === 200 ){
 					commit('setUser', user);
 					commit('setloggedIn', true);
 				}else{
