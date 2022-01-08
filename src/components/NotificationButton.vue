@@ -1,5 +1,5 @@
 <template>
-  <div class="notification-container">
+  <div class="notification-container" :class="{ notify }">
     <i class="fas fa-bell"></i>
   </div>
 </template>
@@ -7,11 +7,18 @@
 <script>
 export default {
   name: "NotificationButton",
+  props: {
+    notify: {
+      type: Boolean,
+      default: false,
+    },
+  },
 };
 </script>
 
 <style scoped>
 .notification-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,5 +30,15 @@ export default {
 }
 .notification-container i {
   font-size: 24px;
+}
+.notify::before {
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  border-radius: 50%;
+  left: 5px;
+  top: 5px;
 }
 </style>
