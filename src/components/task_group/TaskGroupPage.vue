@@ -2,7 +2,7 @@
   <BaseNavBar bg-color="#feeee9">
     <div class="user-info">
       <Avatar />
-      <TheTitleAndDate/>
+      <TheTitleAndDate />
     </div>
     <Search @search="startSearch" />
     <NotificationButton />
@@ -10,7 +10,7 @@
 
   <div class="task-menu-container">
     <h3>My Tasks</h3>
-    <ButtonAdd @click="createNewGroup"/>
+    <ButtonAdd @click="createNewGroup" />
   </div>
   <div v-if="isFetchTaskGroups" class="task-groups-container">
     <h1>fetch groups</h1>
@@ -46,7 +46,7 @@ export default {
     NotificationButton,
     Search,
     TheTitleAndDate,
-    ButtonAdd
+    ButtonAdd,
   },
   data() {
     return {
@@ -58,17 +58,16 @@ export default {
   },
   computed: {
     filtredGroups() {
-      const searchValue = this.searchValue.toLowerCase()
-      const compare = searchValue===''
+      const searchValue = this.searchValue.toLowerCase();
+      const compare = searchValue === "";
       return this.taskGroups.filter((group) => {
-        const title = group.title.toLowerCase()
+        const title = group.title.toLowerCase();
         return compare || title.includes(searchValue);
       });
     },
   },
   async mounted() {
     const idUser = this.$store.state.user.id;
-    console.log('iduser', idUser);
     const taskGroups = await Api.get(`task-groups/user/${idUser}`);
     this.idUser = idUser;
     this.taskGroups = taskGroups.data;
@@ -76,10 +75,13 @@ export default {
   },
   methods: {
     createNewGroup() {
-      this.$router.push({ name: "group", query: { create:true , idUser:this.idUser} });
+      this.$router.push({
+        name: "group",
+        query: { create: true, idUser: this.idUser },
+      });
     },
     onRemove(id) {
-      this.taskGroups = this.taskGroups.filter(group => group.id !== id);
+      this.taskGroups = this.taskGroups.filter((group) => group.id !== id);
     },
     startSearch(value) {
       this.searchValue = value;

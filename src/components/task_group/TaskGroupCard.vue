@@ -34,6 +34,17 @@ export default {
       const response = await Api.delete(`task-groups/${this.id}`);
       if (response.status === 200) {
         this.$emit("remove", this.id);
+        this.$notify({
+          type: "sucess",
+          title: "group",
+          text: "removido com sucesso",
+        });
+      } else {
+        this.$notify({
+          type: "error",
+          title: "group",
+          text: "nao pode ser removido",
+        });
       }
     },
     async editGroup() {

@@ -46,7 +46,7 @@ export default {
     TheCheckBox,
     TaskCardFormEdit,
   },
-  emits: ["deleted"],
+  emits: ["deleted", "created"],
   props: {
     id: Number,
     idGroup: Number,
@@ -54,6 +54,10 @@ export default {
     description: String,
     creationDate: String,
     updatedDate: String,
+    edit: {
+      type: Boolean,
+      default: false,
+    },
     currentTime: {
       type: String,
       default: "",
@@ -67,7 +71,7 @@ export default {
   },
   data() {
     return {
-      isEdit: false,
+      isEdit: this.edit,
       localId: this.id,
       localTitle: this.title,
       localDescription: this.description,
@@ -95,10 +99,27 @@ export default {
   },
   methods: {
     async removeTask() {
-      
-      const response = await Api.delete(`task/${this.localId}`);
-      if (response.status === 200) {
-        console.log("task removida");
+      if (this.localId !== -1) {
+        const response = await Api.delete(`task/${this.localId}`);
+        if (response.status === 200) {
+          this.$notify({
+            type: "sucess",
+            title: "task",
+            text: "task removida",
+          });
+        } else {
+          this.$notify({
+            type: "error",
+            title: "task",
+            text: "a task nao pode ser removida",
+          });
+        }
+      } else {
+        this.$notify({
+          type: "sucess",
+          title: "task",
+          text: "task removida",
+        });
       }
       this.$emit("deleted", this.localId);
     },
@@ -115,35 +136,64 @@ export default {
       this.localTitle = data.title;
       this.localDescription = data.description;
       this.localCurrentTime = data.time;
-      this.isEditing = false;
-      let response = null;
 
       if (this.localId === -1) {
-        response = await Api.post("task", {
-          task: {
-            title: this.localTitle,
-            idGroup: this.idGroup,
-            description: this.localDescription,
-            status: this.localStatus,
-            currentTime: this.localCurrentTime,
-          },
-        });
+        await this.createTask();
       } else {
-        response = await Api.put("task", {
-          task: {
-            id: this.localId,
-            title: this.localTitle,
-            idGroup: this.idGroup,
-            description: this.localDescription,
-            status: this.localStatus,
-            currentTime: this.localCurrentTime,
-          },
-        });
-      }
-      if (response.status === 200) {
-        console.log("task atualizada");
+        await this.updateTask();
       }
       this.isEdit = false;
+    },
+    async createTask() {
+      const response = await Api.post("task", {
+        task: {
+          title: this.localTitle,
+          idGroup: this.idGroup,
+          description: this.localDescription,
+          status: this.localStatus,
+          currentTime: this.localCurrentTime,
+        },
+      });
+      if (response.status === 200) {
+        this.localId = response.data.id;
+        this.$notify({
+          type: "sucess",
+          title: "task",
+          text: "task criada",
+        });
+        this.$emit("created", this.localId);
+      } else {
+        this.$notify({
+          type: "error",
+          title: "task",
+          text: "a tarefa não pode ser salva",
+        });
+      }
+    },
+    async updateTask() {
+      const response = await Api.put("task", {
+        task: {
+          id: this.localId,
+          title: this.localTitle,
+          idGroup: this.idGroup,
+          description: this.localDescription,
+          status: this.localStatus,
+          currentTime: this.localCurrentTime,
+        },
+      });
+      if (response.status === 200) {
+        this.$notify({
+          type: "sucess",
+          title: "task",
+          text: "task atualizada",
+        });
+      } else {
+        this.$notify({
+          type: "error",
+          title: "task",
+          text: "a tarefa não pode ser salva",
+        });
+      }
     },
     onClose() {
       this.isEdit = false;
