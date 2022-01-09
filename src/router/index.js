@@ -4,10 +4,11 @@ import SignUp from '../components/signin/SignUp.vue';
 import HomePage from '../components/landing/HomePage.vue'
 import About from '../components/landing/About.vue'
 import Contact from '../components/landing/Contact.vue'
+import NotFound from '../components/landing/NotFound.vue'
 import TaskGroupPage from '../components/task_group/TaskGroupPage.vue'
 import TaskGroup from '../components/task_group/TaskGroup.vue'
 
-const publicPages = ['/about', '/contact', '/login', '/signup'];
+const publicPages = ['/about', '/contact', '/login', '/signup','/not-found'];
 const routes = [
 
   { path: '/', component: HomePage },
@@ -17,6 +18,7 @@ const routes = [
   { path: '/contact', component: Contact },
   { path: '/task-groups', name: 'task-groups', component: TaskGroupPage },
   { path: '/task-groups/tasks/', component: TaskGroup, name: 'group' },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ];
 
 const router = createRouter({
