@@ -15,18 +15,32 @@ export default {
       type: Boolean,
       default: false,
     },
+    boxSize: {
+      type: Number,
+      default: 40,
+    },
+    markSize: {
+      type: Number,
+      default: 40,
+    },
     blocked: {
       type: Boolean,
       default: false,
     },
+    disableOnClick: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ["toogleStatus"],
   data() {
     return { isChecked: this.checked || this.blocked };
   },
   methods: {
     onClick() {
-      if(!this.blocked){
+      if (!this.blocked && !this.disableOnClick) {
         this.isChecked = !this.isChecked;
+        this.$emit("toogleStatus", this.isChecked);
       }
     },
   },
@@ -35,8 +49,8 @@ export default {
 
 <style scoped>
 .checkbox {
-  height: 40px;
-  width: 40px;
+  height: calc(v-bind(boxSize) * 1px);
+  width: calc(v-bind(boxSize) * 1px);
   border: 3px solid rgba(0, 0, 0, 0.74);
   display: flex;
   justify-content: center;
@@ -44,7 +58,7 @@ export default {
 }
 .v-check,
 .x-check {
-  font-size: 30px;
+  font-size: calc(v-bind(markSize) * 1px);
   color: green;
   font-weight: bolder;
 }
