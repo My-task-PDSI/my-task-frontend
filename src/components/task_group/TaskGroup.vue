@@ -108,11 +108,10 @@ export default {
           });
       }
     },
-    async onCreateTask(id) {
+    async onCreateTask(newTask) {
       this.tasks = this.tasks.map((task) => {
         if (task.id === -1) {
-          task.id = id;
-          delete task.edit;
+          return newTask;
         }
         return task;
       });

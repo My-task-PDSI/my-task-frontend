@@ -1,44 +1,44 @@
 <template>
-<div class="page-container">
-  <BaseNavBar bg-color="#feeee9">
-    <div class="user-info">
-      <Avatar />
-      <TheTitleAndDate />
+  <div class="page-container">
+    <BaseNavBar bg-color="#feeee9">
+      <div class="user-info">
+        <Avatar />
+        <TheTitleAndDate />
+      </div>
+      <Search @search="startSearch" />
+      <NotificationButton />
+    </BaseNavBar>
+    <div class="task-menu-container">
+      <h3>My Tasks</h3>
+      <ButtonAdd @click="createNewGroup" />
     </div>
-    <Search @search="startSearch" />
-    <NotificationButton />
-  </BaseNavBar>
-  <div class="task-menu-container">
-    <h3>My Tasks</h3>
-    <ButtonAdd @click="createNewGroup" />
+    <div v-if="isFetchTaskGroups" class="task-groups-container">
+      <h1>fetch groups</h1>
+    </div>
+    <div else class="task-groups-container">
+      <TaskGroupCard
+        v-for="group in filtredGroups"
+        :id="group.id"
+        :title="group.title"
+        :id-user="group.idUser"
+        :key="group.id"
+        @remove="onRemove"
+      />
+    </div>
   </div>
-  <div v-if="isFetchTaskGroups" class="task-groups-container">
-    <h1>fetch groups</h1>
-  </div>
-  <div else class="task-groups-container">
-    <TaskGroupCard
-      v-for="group in filtredGroups"
-      :id="group.id"
-      :title="group.title"
-      :id-user="group.idUser"
-      :key="group.id"
-      @remove="onRemove"
-    />
-  </div>
-</div>
 </template>
 
 <script>
-import BaseNavBar from "../BaseNavBar.vue";
-import Avatar from "../Avatar.vue";
-import Search from "../Search.vue";
-import TheTitleAndDate from "../TheTitleAndDate.vue";
-import NotificationButton from "../NotificationButton.vue";
-import TaskGroupCard from "./TaskGroupCard.vue";
-import ButtonAdd from "../button/ButtonAdd.vue";
-import Api from "../../services/api";
+import BaseNavBar from '../BaseNavBar.vue';
+import Avatar from '../Avatar.vue';
+import Search from '../Search.vue';
+import TheTitleAndDate from '../TheTitleAndDate.vue';
+import NotificationButton from '../NotificationButton.vue';
+import TaskGroupCard from './TaskGroupCard.vue';
+import ButtonAdd from '../button/ButtonAdd.vue';
+import Api from '../../services/api';
 export default {
-  name: "TaskGroupPage",
+  name: 'TaskGroupPage',
 
   components: {
     TaskGroupCard,
@@ -53,11 +53,11 @@ export default {
     return {
       taskGroups: [],
       isFetchTaskGroups: true,
-      searchValue: ""
+      searchValue: "",
     };
   },
   computed: {
-    idUser(){
+    idUser() {
       return this.$store.state.user.id;
     },
     filtredGroups() {
@@ -70,8 +70,6 @@ export default {
     },
   },
   async mounted() {
-    
-    console.log('group get store', this.$store.state.user);
     const taskGroups = await Api.get(`task-groups/user/${this.idUser}`);
     this.taskGroups = taskGroups.data;
     this.isFetchTaskGroups = false;

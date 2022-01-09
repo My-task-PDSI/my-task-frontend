@@ -6,22 +6,26 @@
       :title="localTitle"
       :description="localDescription"
       :currentTime="localCurrentTime"
+      :status="localStatus"
+      :status-checked="isCompleted"
+      :status-blocked="isBlocked"
+
       @save="onSave"
       @close="onClose"
     />
     <div v-else class="task-container">
       <TheCheckBox
-        @click="toogleStatus"
         :checked="isCompleted"
-        :checkmark="isBlocked"
+        :blocked="isBlocked"
+        :disable-on-click="true"
       />
       <div class="task-title-container">
         <h3 for="title">{{ localTitle }}</h3>
       </div>
-      <div v-if="currentTime" class="task-time-container">
+      <div v-if="localCurrentTime" class="task-time-container">
         <h3 for="time">as {{ getTime }}</h3>
       </div>
-      <div v-if="currentTime" class="task-time-container">
+      <div v-if="localCurrentTime" class="task-time-container">
         <h3 for="time">em {{ getDate }}</h3>
       </div>
       <div class="buttons">
@@ -87,12 +91,12 @@ export default {
       return this.localStatus === "blocked";
     },
     getDate() {
-      const date = new Date(this.currentTime);
+      const date = new Date(this.localCurrentTime);
       const stringDate = date.toLocaleDateString();
       return stringDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$1 / $2/ $3");
     },
     getTime() {
-      const date = new Date(this.currentTime);
+      const date = new Date(this.localCurrentTime);
       const time = date.toLocaleTimeString().slice(0, 5);
       return time;
     },
@@ -123,19 +127,14 @@ export default {
       }
       this.$emit("deleted", this.localId);
     },
-    toogleStatus() {
-      if (!this.isBlocked) {
-        this.localStatus =
-          this.localStatus === "completed" ? "not-completed" : "completed";
-      }
-    },
     goEdit() {
       this.isEdit = true;
     },
     async onSave(data) {
       this.localTitle = data.title;
       this.localDescription = data.description;
-      this.localCurrentTime = data.time;
+      this.localCurrentTime = data.currentTime;
+      this.localStatus = data.status;
 
       if (this.localId === -1) {
         await this.createTask();
@@ -161,7 +160,14 @@ export default {
           title: "task",
           text: "task criada",
         });
-        this.$emit("created", this.localId);
+        this.$emit("created", {
+          id:this.localId,
+          title: this.localTitle,
+          idGroup: this.idGroup,
+          description: this.localDescription,
+          status: this.localStatus,
+          currentTime: this.localCurrentTime
+          });
       } else {
         this.$notify({
           type: "error",

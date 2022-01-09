@@ -7,18 +7,18 @@
 
 <script>
 export default {
-  name: "TheTitleAndDate",
+  name: 'TheTitleAndDate',
   props: {
     title: {
       type: String,
-      default: "Inicio",
+      default: 'Inicio',
     },
   },
   data() {
     return {
-      currentDay: new Date().toLocaleDateString("pt-BR", {
-        month: "long",
-        day: "numeric",
+      currentDay: new Date().toLocaleDateString('pt-BR', {
+        month: 'long',
+        day: 'numeric',
       }),
     };
   },

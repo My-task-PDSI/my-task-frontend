@@ -25,7 +25,8 @@
 
 <script>
 export default {
-  name: "TaskGroupFormEdit",
+  name: 'TaskGroupFormEdit',
+  
   props: {
     id: {
       type: Number,
@@ -40,7 +41,7 @@ export default {
       required: true,
     },
   },
-  emits: ["save", "close"],
+  emits: ['save', 'close'],
   methods: {
     onSave(event) {
       event.preventDefault();
@@ -49,11 +50,11 @@ export default {
         title: formdata.title.value,
         description: formdata.description.value,
       };
-      this.$emit("save", data);
+      this.$emit('save', data);
     },
     onClose(event) {
       event.preventDefault();
-      this.$emit("close");
+      this.$emit('close');
     },
   },
 };
