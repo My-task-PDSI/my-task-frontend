@@ -1,4 +1,5 @@
 <template>
+<div class="page-container">
   <BaseNavBar bg-color="#feeee9">
     <div class="user-info">
       <Avatar />
@@ -7,7 +8,6 @@
     <Search @search="startSearch" />
     <NotificationButton />
   </BaseNavBar>
-
   <div class="task-menu-container">
     <h3>My Tasks</h3>
     <ButtonAdd @click="createNewGroup" />
@@ -25,6 +25,7 @@
       @remove="onRemove"
     />
   </div>
+</div>
 </template>
 
 <script>
@@ -52,11 +53,13 @@ export default {
     return {
       taskGroups: [],
       isFetchTaskGroups: true,
-      idUser: -1,
-      searchValue: "",
+      searchValue: ""
     };
   },
   computed: {
+    idUser(){
+      return this.$store.state.user.id;
+    },
     filtredGroups() {
       const searchValue = this.searchValue.toLowerCase();
       const compare = searchValue === "";
@@ -67,9 +70,9 @@ export default {
     },
   },
   async mounted() {
-    const idUser = this.$store.state.user.id;
-    const taskGroups = await Api.get(`task-groups/user/${idUser}`);
-    this.idUser = idUser;
+    
+    console.log('group get store', this.$store.state.user);
+    const taskGroups = await Api.get(`task-groups/user/${this.idUser}`);
     this.taskGroups = taskGroups.data;
     this.isFetchTaskGroups = false;
   },

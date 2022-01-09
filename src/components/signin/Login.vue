@@ -58,8 +58,7 @@ export default {
         const { user, error } = response.data;
 
         if (response.status === 200) {
-          console.log(user);
-          store.commit("setUser", user);
+          store.commit("setUser", { id: user.id, ...this.userLogged });
           store.commit("setloggedIn", true);
           this.$router.push("/task-groups");
         } else {

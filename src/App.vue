@@ -1,17 +1,22 @@
 <template>
-  <notifications position="top right" class="my-notification" />
-  <router-view />
+  <div v-if="loaded" class="app-container">
+    <notifications position="top right" class="my-notification" />
+    <router-view />
+  </div>
 </template>
 <script>
-
 export default {
-  name:'App',
-  async mounted(){
-    console.log('app montado', this.$store.state);
-    await this.$store.dispatch('initCheckAuthenticate');
-  }
-}
-    </script>
+  name: 'App',
+  data() {
+    return { loaded: false };
+  },
+  async mounted() {
+    console.log('store com app montado', this.$store.state);
+    await this.$store.dispatch("initCheckAuthenticate");
+    this.loaded = true;
+  },
+};
+</script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap");
 
