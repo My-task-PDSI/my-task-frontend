@@ -2,7 +2,7 @@
   <div class="task-group-container">
     <BaseNavBar bg-color="#edecf7">
       <Avatar />
-      <NotificationButton />
+      <NotificationButton :notify="hasNotification"/>
     </BaseNavBar>
     <div class="task-group-info">
       <div v-if="isEditing" class="container">
@@ -34,7 +34,8 @@
         <TaskCard
           v-for="task in tasks"
           :="task"
-          :key="task.id"
+          :status="task.status"
+          :key="task.status"
           @created="onCreateTask"
           @deleted="deleteTask"
         />
@@ -69,6 +70,7 @@ export default {
     return {
       id: -1,
       idUser: -1,
+      hasNotification: false,
       title: "",
       description: "",
       tasks: [],
@@ -100,12 +102,12 @@ export default {
             text: "não pode ser removido",
           });
         }
-      }else{
+      } else {
         this.$notify({
-            type: "warn",
-            title: "group",
-            text: "esse grupo nem foi salvo",
-          });
+          type: "warn",
+          title: "group",
+          text: "esse grupo nem foi salvo",
+        });
       }
     },
     async onCreateTask(newTask) {
@@ -122,10 +124,10 @@ export default {
     async addTask() {
       if (this.id < 0) {
         return this.$notify({
-            type: "error",
-            title: "group",
-            text: "salve o grupo para adicionar tasks",
-          });
+          type: "error",
+          title: "group",
+          text: "salve o grupo para adicionar tasks",
+        });
       }
       const cantAdd = this.tasks.some((task) => task.id === -1);
       if (cantAdd) {
@@ -193,6 +195,21 @@ export default {
         this.updateGroup();
       }
     },
+    onNotifications(notification) {
+      const expiredTask = this.tasks.find(
+        (task) => ((notification.idTask === task.id) && (task.status !== 'blocked'))
+      );
+      if (expiredTask) {
+        this.hasNotification = true;
+        expiredTask.status = "blocked";
+        this.tasks = [...this.tasks];
+        this.$notify({
+          type: "error",
+          title: "tarefa",
+          text: notification.message,
+        });
+      }
+    },
   },
   async mounted() {
     const { edit, id, create, idUser } = this.$route.query;
@@ -213,6 +230,11 @@ export default {
       this.description = "description";
     }
     this.isFetchTasks = false;
+    const callback = (notification)=>{return this.onNotifications(notification)};
+    this.$store.commit("replaceSocketEvent", {
+      name: "notification",
+      callback: callback,
+    });
   },
 };
 </script>

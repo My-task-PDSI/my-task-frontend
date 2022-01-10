@@ -7,7 +7,7 @@
       :description="localDescription"
       :currentTime="localCurrentTime"
       :status="localStatus"
-      :status-checked="isCompleted"
+      :status-checked="isChecked"
       :status-blocked="isBlocked"
 
       @save="onSave"
@@ -15,7 +15,7 @@
     />
     <div v-else class="task-container">
       <TheCheckBox
-        :checked="isCompleted"
+        :checked="isChecked"
         :blocked="isBlocked"
         :disable-on-click="true"
       />
@@ -84,8 +84,8 @@ export default {
     };
   },
   computed: {
-    isCompleted() {
-      return this.localStatus === "completed";
+    isChecked() {
+      return this.localStatus === "completed" || this.isBlocked;
     },
     isBlocked() {
       return this.localStatus === "blocked";
