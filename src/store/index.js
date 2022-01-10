@@ -17,6 +17,9 @@ const store = createStore({
 		replaceSocketEvent(state, dataEvent) {
 			socketService.replaceEvent(state.socket,dataEvent.name, dataEvent.callback);
 		},
+		removeAllEvent(state, name) {
+			state.socket.removeAllListeners(name);
+		},
 		setUser(state, user) {
 			state.user = {...user};
 			localStorage.setItem('mystask-user', JSON.stringify(user));
