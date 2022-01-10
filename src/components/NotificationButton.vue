@@ -38,7 +38,8 @@ export default {
   width: 10px;
   background-color: red;
   border-radius: 50%;
-  left: 5px;
+  left: 100%;
   top: 5px;
+  transform: translateX(-15px)
 }
 </style>

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name: 'ButtonComp',
+    name: 'Button',
     props: { msg: String }
 }
 </script>
