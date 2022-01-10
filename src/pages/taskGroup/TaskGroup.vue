@@ -38,7 +38,7 @@
           v-for="task in tasks"
           :="task"
           :status="task.status"
-          :key="task.status"
+          :key="task.id+task.status"
           @created="onCreateTask"
           @deleted="deleteTask"
         />
@@ -115,7 +115,7 @@ export default {
     },
     async onCreateTask(newTask) {
       this.tasks = this.tasks.map((task) => {
-        return  (task.id === -1) ? newTask : task;
+        return (task.id === -1) ? newTask : task;
       });
     },
     async deleteTask(id) {
