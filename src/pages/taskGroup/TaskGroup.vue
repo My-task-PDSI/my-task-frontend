@@ -152,7 +152,7 @@ export default {
       this.tasks = [task, ...this.tasks];
     },
     async goNotifications() {
-      this.$router.push({path: "notifications"});
+      this.$router.push({path: "/notifications"});
     },
     async saveNewGroup() {
       let response = await Api.post("task-groups", {

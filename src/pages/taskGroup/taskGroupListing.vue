@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     async goNotifications() {
-      this.$router.push({path: "notifications"});
+      this.$router.push({path: "/notifications"});
     },
     createNewGroup() {
       this.$router.push({
