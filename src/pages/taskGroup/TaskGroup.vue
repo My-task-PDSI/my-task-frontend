@@ -52,7 +52,7 @@ import Avatar from '../../components/Avatar.vue';
 import BaseNavBar from '../../components/BaseNavBar.vue';
 import NotificationButton from '../../components/NotificationButton.vue';
 import TaskCard from '../../components/task/TaskCard.vue';
-import TaskGroupFormEdit from '../../components/task_group/TaskGroupFormEdit.vue';
+import TaskGroupFormEdit from '../../components/taskGroup/TaskGroupFormEdit.vue';
 import Api from '../../services/api';
 import ButtonEdit from '../../components/button/ButtonEdit.vue';
 import ButtonRemove from '../../components/button/ButtonRemove.vue';

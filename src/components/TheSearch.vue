@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "Search",
+  name: "TheSearch",
   emits: ["search"],
   methods: {
     onSearch(event) {

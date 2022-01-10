@@ -5,7 +5,7 @@
         <Avatar />
         <TheTitleAndDate />
       </div>
-      <Search @search="startSearch" />
+      <TheSearch @search="startSearch" />
       <NotificationButton
       :notify="hasNotification"
       @click="goNotifications"
@@ -34,10 +34,10 @@
 <script>
 import BaseNavBar from '../../components/BaseNavBar.vue';
 import Avatar from '../../components/Avatar.vue';
-import Search from '../../components/Search.vue';
+import TheSearch from '../../components/TheSearch.vue';
 import TheTitleAndDate from '../../components/TheTitleAndDate.vue';
 import NotificationButton from '../../components/NotificationButton.vue';
-import TaskGroupCard from '../../components/task_group/TaskGroupCard.vue';
+import TaskGroupCard from '../../components/taskGroup/TaskGroupCard.vue';
 import ButtonAdd from '../../components/button/ButtonAdd.vue';
 import Api from '../../services/api';
 export default {
@@ -48,7 +48,7 @@ export default {
     Avatar,
     BaseNavBar,
     NotificationButton,
-    Search,
+    TheSearch,
     TheTitleAndDate,
     ButtonAdd,
   },
