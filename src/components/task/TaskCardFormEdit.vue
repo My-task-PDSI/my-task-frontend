@@ -96,16 +96,56 @@ export default {
       const isCompleted = this.localStatus === "completed";
       this.localStatus = isCompleted ? "not-completed" : "completed";
     },
+    isValidTitle(title) {
+      const TITLE_LENGTH = 20;
+      return title.length <= TITLE_LENGTH;
+    },
+    isValidDescription(description) {
+      const DESCRIPTION_LENGTH = 50;
+      return description.length <= DESCRIPTION_LENGTH;
+    },
+    isValidCurrentTime(currentTime) {
+      const currentDate = new Date();
+      const chosenDate = new Date(currentTime);
+      return !currentTime || chosenDate > currentDate;
+    },
     onSave(event) {
       event.preventDefault();
       const formdata = this.$refs.formdata;
+      console.log(formdata.time.value);
       const data = {
         title: formdata.title.value,
         description: formdata.description.value,
         currentTime: formdata.time.value ? formdata.time.value : null,
         status: this.localStatus,
       };
-      this.$emit("save", data);
+      if (!data.title) {
+        this.$notify({
+          type: "error",
+          title: "Task",
+          text: "informe um titulo a tarefa",
+        });
+      } else if (!this.isValidTitle(data.title)) {
+        this.$notify({
+          type: "error",
+          title: "Task",
+          text: "titulo so pode ter 20 caracteres",
+        });
+      } else if (!this.isValidDescription(data.description)) {
+        this.$notify({
+          type: "error",
+          title: "Task",
+          text: "descricao so pode ter 50 caracteres",
+        });
+      } else if (!this.isValidCurrentTime(data.currentTime)) {
+        this.$notify({
+          type: "error",
+          title: "Task",
+          text: "escolha uma data futura",
+        });
+      }else{
+        this.$emit("save", data);
+      }
     },
     removeCurrentTime(event) {
       event.preventDefault();
