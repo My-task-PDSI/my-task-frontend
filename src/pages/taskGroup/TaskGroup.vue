@@ -2,7 +2,12 @@
   <div class="task-group-container">
     <BaseNavBar bg-color="#edecf7">
       <Avatar />
-      <NotificationButton :notify="hasNotification" @click="goNotifications" />
+      <div class="nav-btns">
+        <HomeButton />
+        <GroupsButton />
+        <NotificationButton :notify="hasNotification" />
+        <LogoutButton />
+      </div>
     </BaseNavBar>
     <div class="task-group-info">
       <div v-if="isEditing" class="container">
@@ -25,6 +30,15 @@
         <div class="info-title">
           <h3>Lista de tarefas</h3>
         </div>
+        <div class="tasks-filter">
+          <label><h3>filtrar</h3></label>
+          <select ref="selectFilter" name="select" @change="handlerOnChanceSelect">
+            <option value="todas" selected>todas</option>
+            <option value="expiradas">expiradas</option>
+            <option value="incompletas">incompletas</option>
+            <option value="completas">completas</option>
+          </select>
+        </div>
         <ButtonAdd @click="addTask" />
       </div>
       <div v-if="isFetchTasks" class="tasks-list">
@@ -32,11 +46,12 @@
       </div>
       <div else class="tasks-list">
         <TaskCard
-          v-for="task in tasks"
+          v-for="task in filtredTasks"
           :="task"
           :status="task.status"
-          :key="task.id + task.status"
+          :key="task.id+task.currentTime??''"
           @created="onCreateTask"
+          @updated="updatedTask"
           @deleted="deleteTask"
         />
       </div>
@@ -47,13 +62,16 @@
 <script>
 import Avatar from "../../components/Avatar.vue";
 import BaseNavBar from "../../components/BaseNavBar.vue";
-import NotificationButton from "../../components/NotificationButton.vue";
+import NotificationButton from "../../components/button/NotificationButton.vue";
 import TaskCard from "../../components/task/TaskCard.vue";
 import TaskGroupFormEdit from "../../components/taskGroup/TaskGroupFormEdit.vue";
 import Api from "../../services/api";
 import ButtonEdit from "../../components/button/ButtonEdit.vue";
 import ButtonRemove from "../../components/button/ButtonRemove.vue";
 import ButtonAdd from "../../components/button/ButtonAdd.vue";
+import LogoutButton from "../../components/button/LogoutButton.vue";
+import HomeButton from "../../components/button/HomeButton.vue";
+import GroupsButton from "../../components/button/GroupsButton.vue";
 export default {
   name: "TaskGroup",
   components: {
@@ -65,18 +83,35 @@ export default {
     ButtonAdd,
     ButtonEdit,
     ButtonRemove,
+    LogoutButton,
+    HomeButton,
+    GroupsButton,
   },
   data() {
     return {
       id: -1,
       idUser: -1,
+      selectedFilter:"todas",
       hasNotification: false,
       title: "",
       description: "",
       tasks: [],
       isFetchTasks: true,
       isEditing: false,
+      keyTask: {}
     };
+  },
+  computed: {
+    filtredTasks() {
+      const filtredCallback = {
+        "todas": () => this.tasks,
+        "completas": () => this.tasks.filter((task) => task.status === "completed"),
+        "incompletas": () =>  this.tasks.filter(
+            (task) => task.status === "not-completed" || task.status === null),
+          "expiradas":()=> this.tasks.filter((task) => task.status === "blocked")
+      };
+      return filtredCallback[this.selectedFilter]();
+    },
   },
   methods: {
     openForm() {
@@ -84,6 +119,9 @@ export default {
     },
     closeForm() {
       this.isEditing = false;
+    },
+    handlerOnChanceSelect() {
+      this.selectedFilter = this.$refs.selectFilter.value;
     },
     async removeGroup() {
       if (this.id > -1) {
@@ -111,12 +149,30 @@ export default {
       }
     },
     async onCreateTask(newTask) {
-      this.tasks = this.tasks.map((task) => {
+      const newTasks = this.tasks.map((task) => {
         return task.id === -1 ? newTask : task;
+      });
+      this.tasks = newTasks.sort((a, b)=>{
+        const dateA = new Date(a.currentTime || null);
+        const dateB = new Date(b.currentTime || null);
+        return dateB - dateA;
       });
     },
     async deleteTask(id) {
       this.tasks = this.tasks.filter((task) => task.id !== id);
+    },
+    async updatedTask(data) {
+      let tasks = this.tasks.map(task=>{
+        if(task.id !== data.id){
+          return task;
+        }
+        return data;
+      })
+      this.tasks = tasks.sort((a, b)=>{
+        const dateA = new Date(a.currentTime || null);
+        const dateB = new Date(b.currentTime || null);
+        return dateB - dateA;
+      });
     },
     async addTask() {
       if (this.id < 0) {
@@ -147,9 +203,6 @@ export default {
         edit: true,
       };
       this.tasks = [task, ...this.tasks];
-    },
-    async goNotifications() {
-      this.$router.push({ path: "/notifications" });
     },
     async saveNewGroup() {
       let response = await Api.post("task-groups", {
@@ -225,6 +278,10 @@ export default {
       this.description = dataGroup.description;
       const tasks = await Api.get(`task-groups/tasks/${this.id}`);
       this.tasks = tasks.data;
+      this.keyTask = this.tasks.reduce((acc, task)=>{
+        acc[task.id] = task.id*10;
+        return acc;
+      },{});
     } else {
       this.title = "title";
       this.description = "description";
@@ -240,6 +297,11 @@ export default {
 </script>
 
 <style scoped>
+.nav-btns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 .task-group-container {
   width: 100vw;
   min-height: 100vh;
@@ -286,7 +348,17 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-.info-title > h3{
+.info-title > h3 {
   word-break: break-all;
+}
+.tasks-filter {
+  display: flex;
+}
+.tasks-filter > label {
+  font-weight: bolder;
+  margin-right: 10px;
+}
+.tasks-filter > label > h3 {
+  font-weight: bolder;
 }
 </style>
