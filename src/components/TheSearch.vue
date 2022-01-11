@@ -27,7 +27,6 @@ export default {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-
   height: 100%;
   padding: 10px 0;
 }

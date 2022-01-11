@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  name: "BaseNavBar",
-  props: {
-    bgColor: {
-      type: String,
-      default: "#1649ff",
-    },
-  },
+  name: 'BaseNavBar',
+  props:{
+    bgColor:{
+      type:String,
+      default:'#1649ff'
+    }
+  }
 };
 </script>
 

@@ -27,7 +27,7 @@ export default {
 
 <style scoped>
 .header {
-  width: 210px;
+  max-width: 210px;
   height: auto;
   margin-left: 10px;
   display: flex;
@@ -38,5 +38,9 @@ export default {
   color: black;
   font-size: 24px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  word-break: break-all;
+}
+.header > h3 {
+  word-break: break-all;
 }
 </style>
