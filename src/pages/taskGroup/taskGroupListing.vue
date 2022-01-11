@@ -6,6 +6,7 @@
         <TheTitleAndDate />
       </div>
       <TheSearch @search="startSearch" />
+      <LogoutButton />
       <NotificationButton :notify="hasNotification" @click="goNotifications" />
     </BaseNavBar>
     <div class="task-menu-container">
@@ -33,6 +34,7 @@ import BaseNavBar from "../../components/BaseNavBar.vue";
 import Avatar from "../../components/Avatar.vue";
 import TheSearch from "../../components/TheSearch.vue";
 import TheTitleAndDate from "../../components/TheTitleAndDate.vue";
+import LogoutButton from "../../components/LogoutButton.vue"
 import NotificationButton from "../../components/NotificationButton.vue";
 import TaskGroupCard from "../../components/taskGroup/TaskGroupCard.vue";
 import ButtonAdd from "../../components/button/ButtonAdd.vue";
@@ -44,6 +46,7 @@ export default {
     TaskGroupCard,
     Avatar,
     BaseNavBar,
+    LogoutButton,
     NotificationButton,
     TheSearch,
     TheTitleAndDate,
