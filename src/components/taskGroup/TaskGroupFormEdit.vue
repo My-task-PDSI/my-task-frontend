@@ -25,8 +25,8 @@
 
 <script>
 export default {
-  name: 'TaskGroupFormEdit',
-  
+  name: "TaskGroupFormEdit",
+
   props: {
     id: {
       type: Number,
@@ -41,8 +41,16 @@ export default {
       required: true,
     },
   },
-  emits: ['save', 'close'],
+  emits: ["save", "close"],
   methods: {
+    isValidTitle(title) {
+      const TITLE_LENGTH = 20;
+      return title.length <= TITLE_LENGTH;
+    },
+    isValidDescription(description) {
+      const DESCRIPTION_LENGTH = 50;
+      return description.length <= DESCRIPTION_LENGTH;
+    },
     onSave(event) {
       event.preventDefault();
       const formdata = this.$refs.formdata;
@@ -50,11 +58,31 @@ export default {
         title: formdata.title.value,
         description: formdata.description.value,
       };
-      this.$emit('save', data);
+      if (!data.title) {
+        this.$notify({
+          type: "error",
+          title: "group",
+          text: "informe um titulo para o grupo",
+        });
+      } else if (!this.isValidTitle(data.title)) {
+        this.$notify({
+          type: "error",
+          title: "group",
+          text: "titulo so pode ter 20 caracteres",
+        });
+      } else if (!this.isValidDescription(data.description)) {
+        this.$notify({
+          type: "error",
+          title: "group",
+          text: "descricao so pode ter 50 caracteres",
+        });
+      }else{
+        this.$emit("save", data);
+      }
     },
     onClose(event) {
       event.preventDefault();
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

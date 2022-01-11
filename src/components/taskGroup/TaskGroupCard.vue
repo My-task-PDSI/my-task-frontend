@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import Api from '../../services/api';
-import ButtonEdit from '../button/ButtonEdit.vue';
-import ButtonRemove from '../button/ButtonRemove.vue';
+import Api from "../../services/api";
+import ButtonEdit from "../button/ButtonEdit.vue";
+import ButtonRemove from "../button/ButtonRemove.vue";
 
 export default {
-  name: 'TaskGroupCard',
+  name: "TaskGroupCard",
   components: {
     ButtonEdit,
     ButtonRemove,
@@ -27,35 +27,35 @@ export default {
     id: Number,
     idUser: Number,
   },
-  emits: ['remove'],
+  emits: ["remove"],
   methods: {
     async removeGroup(event) {
       event.stopPropagation();
       const response = await Api.delete(`task-groups/${this.id}`);
       if (response.status === 200) {
-        this.$emit('remove', this.id);
+        this.$emit("remove", this.id);
         this.$notify({
-          type: 'sucess',
-          title: 'group',
-          text: 'removido com sucesso',
+          type: "sucess",
+          title: "group",
+          text: "removido com sucesso",
         });
       } else {
         this.$notify({
-          type: 'error',
-          title: 'group',
-          text: 'nao pode ser removido',
+          type: "error",
+          title: "group",
+          text: "nao pode ser removido",
         });
       }
     },
     async editGroup() {
       this.$router.push({
-        name: 'group',
+        name: "group",
         query: { id: this.id, edit: true, idUser: this.idUser },
       });
     },
     async openGroup() {
       this.$router.push({
-        name: 'group',
+        name: "group",
         query: { id: this.id, edit: false, idUser: this.idUser },
       });
     },
@@ -65,31 +65,34 @@ export default {
 
 <style scoped>
 .task-group-card {
-  width: 300px;
-  height: 90px;
+  max-width: 300px;
+  min-height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 10px;
   padding-right: 10px;
   margin: 20px;
+  flex-wrap: wrap;
   border-bottom: 4px solid rgb(203, 201, 212);
 }
 .task-rect {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   background-color: rgba(108, 13, 163, 0.336);
 }
 .task-icons-container {
-  width: 50px;
-  height: 90px;
+  min-width: 50px;
+  min-height: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .task-info-container {
-  width: 140px;
-  height: 90px;
+  max-width: 20ch;
+  min-height: 30px;
+  padding: 10px;
+  word-break: break-all;
 }
 </style>
