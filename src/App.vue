@@ -6,13 +6,12 @@
 </template>
 <script>
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return { loaded: false };
   },
   async mounted() {
-    console.log('store com app montado', this.$store.state);
-    await this.$store.dispatch("initCheckAuthenticate");
+    await this.$store.dispatch("initialCredentialCheck");
     this.loaded = true;
   },
 };

@@ -1,18 +1,18 @@
 <template>
-    <button>{{ msg }}</button>
+  <button>{{ msg }}</button>
 </template>
 
 <script>
 export default {
-    name: 'Button',
-    props: { msg: String }
-}
+  name: "Button",
+  props: { msg: String },
+};
 </script>
 
 <style scoped>
 button {
-  background-color: #1649FF;
-  color: #FFFFFF;
+  background-color: #1649ff;
+  color: #ffffff;
   padding: 10px;
   font-weight: bold;
   border-radius: 50px;

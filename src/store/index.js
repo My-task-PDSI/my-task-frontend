@@ -15,13 +15,13 @@ const store = createStore({
 			sessionStorage.setItem('mystask-loggedin', JSON.stringify(value));
 		},
 		replaceSocketEvent(state, dataEvent) {
-			socketService.replaceEvent(state.socket,dataEvent.name, dataEvent.callback);
+			socketService.replaceEvent(state.socket, dataEvent.name, dataEvent.callback);
 		},
 		removeAllEvent(state, name) {
 			state.socket.removeAllListeners(name);
 		},
 		setUser(state, user) {
-			state.user = {...user};
+			state.user = { ...user };
 			localStorage.setItem('mystask-user', JSON.stringify(user));
 			state.socket.emit('open', user.id);
 		},
@@ -33,10 +33,9 @@ const store = createStore({
 		}
 	},
 	actions: {
-		async initCheckAuthenticate({ commit }) {
+		async initialCredentialCheck({ commit }) {
 			try {
 				const user = JSON.parse(localStorage.getItem('mystask-user'));
-				console.log('user localStorage', user);
 				const response = await Api.post('user/login', {
 					username: user.username,
 					password: user.password,

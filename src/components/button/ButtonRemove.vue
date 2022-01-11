@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import BaseButtonIcon from './BaseButtonIcon.vue';
+import BaseButtonIcon from "./BaseButtonIcon.vue";
 export default {
-  name: 'ButtonRemove',
+  name: "ButtonRemove",
   components: {
     BaseButtonIcon,
   },

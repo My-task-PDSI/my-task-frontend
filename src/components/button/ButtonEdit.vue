@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import BaseButtonIcon from './BaseButtonIcon.vue';
+import BaseButtonIcon from "./BaseButtonIcon.vue";
 export default {
-  name: 'ButtonEdit',
+  name: "ButtonEdit",
   components: {
     BaseButtonIcon,
   },
@@ -15,5 +15,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

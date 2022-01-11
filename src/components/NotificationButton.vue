@@ -40,6 +40,6 @@ export default {
   border-radius: 50%;
   left: 100%;
   top: 5px;
-  transform: translateX(-15px)
+  transform: translateX(-15px);
 }
 </style>

@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import Button from '../../components/button/Button.vue';
+import Button from "../../components/button/Button.vue";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Button,
   },

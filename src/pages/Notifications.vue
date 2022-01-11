@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: 'Notifications',
+  name: "Notifications",
 };
 </script>
 <style scoped>

@@ -70,11 +70,11 @@ export default {
       }
     },
   },
-  mounted(){
-    if(this.$store.state.loggedIn){
+  mounted() {
+    if (this.$store.state.loggedIn) {
       this.$router.push("/task-groups");
     }
-  }
+  },
 };
 </script>
 <style scoped>

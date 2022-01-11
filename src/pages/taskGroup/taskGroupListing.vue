@@ -6,10 +6,7 @@
         <TheTitleAndDate />
       </div>
       <TheSearch @search="startSearch" />
-      <NotificationButton
-      :notify="hasNotification"
-      @click="goNotifications"
-      />
+      <NotificationButton :notify="hasNotification" @click="goNotifications" />
     </BaseNavBar>
     <div class="task-menu-container">
       <h3>My Tasks</h3>
@@ -32,16 +29,16 @@
 </template>
 
 <script>
-import BaseNavBar from '../../components/BaseNavBar.vue';
-import Avatar from '../../components/Avatar.vue';
-import TheSearch from '../../components/TheSearch.vue';
-import TheTitleAndDate from '../../components/TheTitleAndDate.vue';
-import NotificationButton from '../../components/NotificationButton.vue';
-import TaskGroupCard from '../../components/taskGroup/TaskGroupCard.vue';
-import ButtonAdd from '../../components/button/ButtonAdd.vue';
-import Api from '../../services/api';
+import BaseNavBar from "../../components/BaseNavBar.vue";
+import Avatar from "../../components/Avatar.vue";
+import TheSearch from "../../components/TheSearch.vue";
+import TheTitleAndDate from "../../components/TheTitleAndDate.vue";
+import NotificationButton from "../../components/NotificationButton.vue";
+import TaskGroupCard from "../../components/taskGroup/TaskGroupCard.vue";
+import ButtonAdd from "../../components/button/ButtonAdd.vue";
+import Api from "../../services/api";
 export default {
-  name: 'taskGroupListing',
+  name: "taskGroupListing",
 
   components: {
     TaskGroupCard,
@@ -85,7 +82,7 @@ export default {
   },
   methods: {
     async goNotifications() {
-      this.$router.push({path: "/notifications"});
+      this.$router.push({ path: "/notifications" });
     },
     createNewGroup() {
       this.$router.push({
@@ -100,9 +97,9 @@ export default {
       this.searchValue = value;
     },
     onNotifications() {
-      if(!this.hasNotification){
+      if (!this.hasNotification) {
         this.hasNotification = true;
-        this.$store.commit('removeAllEvent');
+        this.$store.commit("removeAllEvent");
       }
     },
   },

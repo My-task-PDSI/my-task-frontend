@@ -2,10 +2,7 @@
   <div class="task-group-container">
     <BaseNavBar bg-color="#edecf7">
       <Avatar />
-      <NotificationButton
-      :notify="hasNotification"
-      @click="goNotifications"
-      />
+      <NotificationButton :notify="hasNotification" @click="goNotifications" />
     </BaseNavBar>
     <div class="task-group-info">
       <div v-if="isEditing" class="container">
@@ -38,7 +35,7 @@
           v-for="task in tasks"
           :="task"
           :status="task.status"
-          :key="task.id+task.status"
+          :key="task.id + task.status"
           @created="onCreateTask"
           @deleted="deleteTask"
         />
@@ -48,17 +45,17 @@
 </template>
 
 <script>
-import Avatar from '../../components/Avatar.vue';
-import BaseNavBar from '../../components/BaseNavBar.vue';
-import NotificationButton from '../../components/NotificationButton.vue';
-import TaskCard from '../../components/task/TaskCard.vue';
-import TaskGroupFormEdit from '../../components/taskGroup/TaskGroupFormEdit.vue';
-import Api from '../../services/api';
-import ButtonEdit from '../../components/button/ButtonEdit.vue';
-import ButtonRemove from '../../components/button/ButtonRemove.vue';
-import ButtonAdd from '../../components/button/ButtonAdd.vue';
+import Avatar from "../../components/Avatar.vue";
+import BaseNavBar from "../../components/BaseNavBar.vue";
+import NotificationButton from "../../components/NotificationButton.vue";
+import TaskCard from "../../components/task/TaskCard.vue";
+import TaskGroupFormEdit from "../../components/taskGroup/TaskGroupFormEdit.vue";
+import Api from "../../services/api";
+import ButtonEdit from "../../components/button/ButtonEdit.vue";
+import ButtonRemove from "../../components/button/ButtonRemove.vue";
+import ButtonAdd from "../../components/button/ButtonAdd.vue";
 export default {
-  name: 'TaskGroup',
+  name: "TaskGroup",
   components: {
     Avatar,
     BaseNavBar,
@@ -115,7 +112,7 @@ export default {
     },
     async onCreateTask(newTask) {
       this.tasks = this.tasks.map((task) => {
-        return (task.id === -1) ? newTask : task;
+        return task.id === -1 ? newTask : task;
       });
     },
     async deleteTask(id) {
@@ -152,7 +149,7 @@ export default {
       this.tasks = [task, ...this.tasks];
     },
     async goNotifications() {
-      this.$router.push({path: "/notifications"});
+      this.$router.push({ path: "/notifications" });
     },
     async saveNewGroup() {
       let response = await Api.post("task-groups", {
@@ -200,7 +197,7 @@ export default {
     },
     onNotifications(notification) {
       const expiredTask = this.tasks.find(
-        (task) => ((notification.idTask === task.id) && (task.status !== 'blocked'))
+        (task) => notification.idTask === task.id && task.status !== "blocked"
       );
       this.hasNotification = true;
       if (expiredTask) {

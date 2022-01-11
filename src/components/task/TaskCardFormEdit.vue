@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import TheCheckBox from '../TheCheckBox.vue';
+import TheCheckBox from "../TheCheckBox.vue";
 export default {
-  name: 'TaskCardFormEdit',
+  name: "TaskCardFormEdit",
   components: {
     TheCheckBox,
   },
@@ -74,7 +74,7 @@ export default {
       default: false,
     },
   },
-  emits: ['save', 'close'],
+  emits: ["save", "close"],
   data() {
     return {
       localCurrentTime: this.currentTime,
@@ -94,7 +94,7 @@ export default {
   methods: {
     toogleStatus() {
       const isCompleted = this.localStatus === "completed";
-        this.localStatus = isCompleted ? "not-completed" : "completed";
+      this.localStatus = isCompleted ? "not-completed" : "completed";
     },
     onSave(event) {
       event.preventDefault();
