@@ -9,7 +9,7 @@ import taskGroupListing from '../pages/taskGroup/taskGroupListing.vue'
 import TaskGroup from '../pages/taskGroup/TaskGroup.vue';
 import Notifications from '../pages/Notifications.vue';
 
-const publicPages = ['/about', '/contact', '/login', '/signup', '/not-found'];
+const publicPages = ['/','/about', '/contact', '/login', '/signup', '/not-found'];
 const routes = [
 
   { path: '/', component: Home },
@@ -28,8 +28,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-router.beforeEach((to, _, next) => {
-
+router.beforeEach((to, from, next) => {
   const isPublicPage = publicPages.includes(to.path);
   const authenticate = sessionStorage.getItem('mystask-loggedin');
   if (isPublicPage || authenticate === 'true') {
