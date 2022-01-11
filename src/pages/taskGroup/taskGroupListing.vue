@@ -112,6 +112,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -126,10 +127,11 @@ export default {
 }
 .task-menu-container > h3 {
   margin-right: 10px;
+  word-break: break-all;
 }
 .user-info {
   display: flex;
-  width: 240px;
+  width: 180px;
   height: auto;
 }
 </style>

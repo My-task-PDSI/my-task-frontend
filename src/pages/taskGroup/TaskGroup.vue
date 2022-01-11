@@ -241,7 +241,7 @@ export default {
 
 <style scoped>
 .task-group-container {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
 }
 .task-group-info {
@@ -255,7 +255,8 @@ export default {
   padding: 0 20px;
 }
 .task-group-info .container-title {
-  height: 60px;
+  flex-wrap: wrap;
+  min-height: 60px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -266,6 +267,7 @@ export default {
   text-align: left;
   font-size: 30px;
   flex-grow: 1;
+  word-break: break-all;
 }
 .tasks-container {
   min-height: 80px;
@@ -283,5 +285,8 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+}
+.info-title > h3{
+  word-break: break-all;
 }
 </style>
