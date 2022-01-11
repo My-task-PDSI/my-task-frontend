@@ -112,7 +112,6 @@ export default {
     onSave(event) {
       event.preventDefault();
       const formdata = this.$refs.formdata;
-      console.log(formdata.time.value);
       const data = {
         title: formdata.title.value,
         description: formdata.description.value,

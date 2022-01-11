@@ -50,7 +50,7 @@ export default {
     TheCheckBox,
     TaskCardFormEdit,
   },
-  emits: ["deleted", "created"],
+  emits: ["deleted", "created", "updated"],
   props: {
     id: Number,
     idGroup: Number,
@@ -126,6 +126,7 @@ export default {
         });
       }
       this.$emit("deleted", this.localId);
+      
     },
     goEdit() {
       this.isEdit = true;
@@ -193,6 +194,14 @@ export default {
           title: "task",
           text: "task atualizada",
         });
+        this.$emit("updated",{
+          id: this.localId,
+          title: this.localTitle,
+          idGroup: this.idGroup,
+          description: this.localDescription,
+          status: this.localStatus,
+          currentTime: this.localCurrentTime,
+        },);
       } else {
         this.$notify({
           type: "error",
