@@ -54,18 +54,26 @@ export default {
       } else {
         console.log(this.userLogged);
         const store = this.$store;
-        const response = await Api.post("user/login", this.userLogged);
-        const { user, error } = response.data;
+        try {
+          const response = await Api.post("user/login", this.userLogged);
+          const { user, error } = response.data;
 
-        if (response.status === 200) {
-          store.commit("setUser", { id: user.id, ...this.userLogged });
-          store.commit("setloggedIn", true);
-          this.$router.push("/task-groups");
-        } else {
-          console.error(error);
-          this.$notify({ type: "error", text: error });
-          store.commit("setUser", null);
-          store.commit("setloggedIn", false);
+          if (response.status === 200) {
+            store.commit("setUser", { id: user.id, ...this.userLogged });
+            store.commit("setloggedIn", true);
+            this.$router.push("/task-groups");
+          } else {
+            console.error(error);
+            this.$notify({ type: "error", text: error });
+            store.commit("setUser", null);
+            store.commit("setloggedIn", false);
+          }
+        } catch (e) {
+           console.error(e);
+          this.$notify({
+            type: "error",
+            text: "Usuário e/ou senha inválidos!",
+          });
         }
       }
     },
