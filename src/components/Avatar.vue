@@ -15,7 +15,6 @@ export default {
   name: "Avatar",
   methods: {
     clickMethod() {
-     
       this.$router.push('/task-groups');
     },
   },
