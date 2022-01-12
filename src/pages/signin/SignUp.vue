@@ -55,7 +55,13 @@
 import BaseNavBar from "../../components/BaseNavBar.vue";
 import Button from "../../components/button/Button.vue";
 import Api from "../../services/api";
-
+function IsEmail(email){
+  var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+    if(reg.test(email)){
+        return true;
+    }
+    return false;
+}
 export default {
   components: {
     BaseNavBar,
@@ -78,6 +84,22 @@ export default {
         this.$notify({
           type: "error",
           text: "Preencha os campos corretamente!",
+        });
+      }else if (!IsEmail(this.newUser.email))  { 
+         this.$notify({
+          type: "error",
+          text: "Digite um email valido",
+        });
+       } 
+      else if (this.newUser.username.length < 5) {
+        this.$notify({
+          type: "error",
+          text: "O nome do usuário deve ter ao menos 5 caracteres",
+        });
+      } else if (this.newUser.password.length < 6) {
+        this.$notify({
+          type: "error",
+          text: "A senha deve ter ao menos 6 caracteres",
         });
       } else if (this.newUser.password != this.newUser.confirmPassword) {
         this.$notify({ type: "error", text: "Senhas devem ser iguais!" });
@@ -102,6 +124,8 @@ export default {
     },
   },
 };
+
+
 </script>
 <style scoped>
 * {
