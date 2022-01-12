@@ -24,11 +24,11 @@
           :value="description"
         ></textarea>
       </div>
-      <div class="input-container">
+      <div class="input-container container-time">
         <label for="time">Time</label>
         <input type="datetime-local" name="time" :value="dateTimeFormat" />
       </div>
-
+      <MemberList :member-list="members" />
       <div class="button-container">
         <button @click="onSave" class="btn">Save</button>
         <button @click="onClose" class="btn">Close</button>
@@ -40,10 +40,12 @@
 
 <script>
 import TheCheckBox from "../TheCheckBox.vue";
+import MemberList from "../member/MemberList.vue";
 export default {
   name: "TaskCardFormEdit",
   components: {
     TheCheckBox,
+    MemberList
   },
   props: {
     id: {
@@ -73,6 +75,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    members:Array
   },
   emits: ["save", "close"],
   data() {
@@ -194,6 +197,12 @@ export default {
   padding-left: 10px;
   border-width: 1px;
   border-style: solid;
+}
+.container-time{
+  width: 200px;
+}
+.container-time input{
+  padding-right: 10px;
 }
 .input-container > input:focus,
 .input-container > textarea:focus {

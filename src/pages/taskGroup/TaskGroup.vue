@@ -15,6 +15,7 @@
           :id="id"
           :title="title"
           :description="description"
+          :members="members"
           @close="closeForm"
           @save="saveData"
         />
@@ -26,6 +27,7 @@
       </div>
     </div>
     <div class="tasks-container">
+      <MemberList :member-list="members" />
       <div class="task-info-container">
         <div class="info-title">
           <h3>Lista de tarefas</h3>
@@ -49,7 +51,8 @@
           v-for="task in filtredTasks"
           :="task"
           :status="task.status"
-          :key="task.id+task.currentTime??''"
+          :key="task.id+task.status||''+task.currentTime||''"
+          :members="members"
           @created="onCreateTask"
           @updated="updatedTask"
           @deleted="deleteTask"
@@ -72,6 +75,7 @@ import ButtonAdd from "../../components/button/ButtonAdd.vue";
 import LogoutButton from "../../components/button/LogoutButton.vue";
 import HomeButton from "../../components/button/HomeButton.vue";
 import GroupsButton from "../../components/button/GroupsButton.vue";
+import MemberList from "../../components/member/MemberList.vue";
 export default {
   name: "TaskGroup",
   components: {
@@ -86,6 +90,7 @@ export default {
     LogoutButton,
     HomeButton,
     GroupsButton,
+    MemberList
   },
   data() {
     return {
@@ -98,7 +103,7 @@ export default {
       tasks: [],
       isFetchTasks: true,
       isEditing: false,
-      keyTask: {}
+      members: [],
     };
   },
   computed: {
@@ -271,17 +276,14 @@ export default {
     this.isEditing = create === "true" || edit === "true";
 
     if (create !== "true" && this.id !== -1) {
-      const group = await Api.get(`task-groups/${this.id}`);
-      const [dataGroup] = group.data;
-      this.id = dataGroup.id;
-      this.title = dataGroup.title;
-      this.description = dataGroup.description;
-      const tasks = await Api.get(`task-groups/tasks/${this.id}`);
-      this.tasks = tasks.data;
-      this.keyTask = this.tasks.reduce((acc, task)=>{
-        acc[task.id] = task.id*10;
-        return acc;
-      },{});
+      const response = await Api.get(`task-groups/${this.id}`);
+      const {group, tasks} = response.data;
+      this.id = group.id;
+      this.title = group.title;
+      this.description = group.description;
+      this.tasks = tasks;
+      this.members = [1,2,3,4];
+      //this.members = members;
     } else {
       this.title = "title";
       this.description = "description";

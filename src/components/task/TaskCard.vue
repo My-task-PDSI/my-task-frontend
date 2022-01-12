@@ -9,7 +9,7 @@
       :status="localStatus"
       :status-checked="isChecked"
       :status-blocked="isBlocked"
-
+      :members="members"
       @save="onSave"
       @close="onClose"
     />
@@ -72,6 +72,7 @@ export default {
       default: "not-completed",
       required: false,
     },
+    members:Array
   },
   data() {
     return {
