@@ -4,7 +4,7 @@
             {{ message }}
         </div>
         <!-- <button @click="removeNotification">Excluir</button > -->
-        <ButtonRemove @click="removeNotification">remove</ButtonRemove>
+        <ButtonRemove class="deleteNotif" @click="removeNotification" />
     </div>
 </template>
 
@@ -12,7 +12,9 @@
 import ButtonRemove from "../../components/button/ButtonRemove.vue";
 export default {
     name: "Notificaation",
-    components: ButtonRemove,
+    components: {
+        ButtonRemove
+    },
     props: {
         message: String
     },
@@ -27,7 +29,7 @@ export default {
     .notif-container {
         display: flex;
     }
-    .notif-container ButtonRemove {
+    .notif-container .deleteNotif {
         margin-left: 50px;
     }
 </style>
