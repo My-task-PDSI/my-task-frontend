@@ -4,6 +4,7 @@
       <Avatar />
       <div class="nav-btns">
         <HomeButton />
+        <UserButton/>
         <GroupsButton />
         <NotificationButton :notify="hasNotification" />
         <LogoutButton />
@@ -64,6 +65,7 @@
 
 <script>
 import Avatar from "../../components/Avatar.vue";
+import UserButton from "../../components/button/UserButton.vue";
 import BaseNavBar from "../../components/BaseNavBar.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
 import TaskCard from "../../components/task/TaskCard.vue";
@@ -80,6 +82,7 @@ export default {
   name: "TaskGroup",
   components: {
     Avatar,
+    UserButton,
     BaseNavBar,
     NotificationButton,
     TaskCard,

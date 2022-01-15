@@ -8,6 +8,7 @@ import NotFound from '../pages/landing/NotFound.vue'
 import taskGroupListing from '../pages/taskGroup/taskGroupListing.vue'
 import TaskGroup from '../pages/taskGroup/TaskGroup.vue';
 import Notifications from '../pages/Notifications.vue';
+import editUser from '../pages/client/edit.vue'
 
 const publicPages = ['/','/about', '/contact', '/login', '/signup', '/not-found'];
 const routes = [
@@ -22,6 +23,7 @@ const routes = [
   { path: '/task-groups', name: 'task-groups', component: taskGroupListing },
   { path: '/task-groups/tasks/', component: TaskGroup, name: 'group' },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
+  {path: '/user/edit/', component: editUser}
 ];
 
 const router = createRouter({

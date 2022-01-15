@@ -7,6 +7,7 @@
       </div>
       <TheSearch @search="startSearch" />
       <HomeButton />
+      <UserButton/>
       <NotificationButton :notify="hasNotification"/>
       <LogoutButton />
     </BaseNavBar>
@@ -40,6 +41,7 @@ import HomeButton from "../../components/button/HomeButton.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
 import TaskGroupCard from "../../components/taskGroup/TaskGroupCard.vue";
 import ButtonAdd from "../../components/button/ButtonAdd.vue";
+import UserButton from "../../components/button/UserButton.vue";
 import Api from "../../services/api";
 export default {
   name: "taskGroupListing",
@@ -47,6 +49,7 @@ export default {
   components: {
     TaskGroupCard,
     Avatar,
+    UserButton,
     BaseNavBar,
     LogoutButton,
     NotificationButton,
