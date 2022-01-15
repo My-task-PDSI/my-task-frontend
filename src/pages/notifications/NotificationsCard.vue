@@ -25,8 +25,10 @@ export default {
 		}
 	},
 	mounted() {
-		Api.get('/notifications').then((response) => {
-			this.notifications = response.data.notifications
+		const userId = this.$store.state.user.id
+		Api.get(`/user/${userId}`).then((response) => {
+			this.notifications = response.data
+			console.log(response)
 		}).catch((error) => {
 			console.log(error)
 		})
