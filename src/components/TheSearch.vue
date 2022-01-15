@@ -2,6 +2,7 @@
   <div class="search-container">
     <input
       @search="onSearch"
+      autocomplete="off"
       type="search"
       name="search"
       placeholder="Pesquise por tarefas..."
