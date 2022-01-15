@@ -1,15 +1,38 @@
 <template>
 	<div class="notif-container">
 		<div class="notif-card">
-			<Notification />
+			<Notification
+				v-for="item in notifications" 
+				:key="item.id" 
+				:message="item.message" 
+			/>
 		</div>
 	</div>
 </template>
 
 <script>
+import Api from '../../services/api'
+import Notification from './Notification.vue'
+
 export default {
-	name: "NotificationsCard"
+	name: "NotificationsCard",
+	components: {
+		Notification
+	},
+	data() {
+		return {
+			notifications: []
+		}
+	},
+	mounted() {
+		Api.get('/notifications').then((response) => {
+			this.notifications = response.data.notifications
+		}).catch((error) => {
+			console.log(error)
+		})
+	}
 }
+
 </script>
 
 <style>
