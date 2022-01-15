@@ -15,12 +15,10 @@ export default {
   name: "Avatar",
   methods: {
     clickMethod() {
-      this.$router.push('/task-groups');
+      this.$router.push("/task-groups");
     },
   },
 };
-
-
 </script>
 
 <style scoped>

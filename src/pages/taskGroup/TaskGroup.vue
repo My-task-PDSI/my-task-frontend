@@ -4,6 +4,7 @@
       <Avatar />
       <div class="nav-btns">
         <HomeButton />
+        <UserButton />
         <GroupsButton />
         <NotificationButton :notify="hasNotification" />
         <LogoutButton />
@@ -34,7 +35,11 @@
         </div>
         <div class="tasks-filter">
           <label><h3>filtrar</h3></label>
-          <select ref="selectFilter" name="select" @change="handlerOnChanceSelect">
+          <select
+            ref="selectFilter"
+            name="select"
+            @change="handlerOnChanceSelect"
+          >
             <option value="todas" selected>todas</option>
             <option value="expiradas">expiradas</option>
             <option value="incompletas">incompletas</option>
@@ -51,7 +56,7 @@
           v-for="task in filtredTasks"
           :="task"
           :status="task.status"
-          :key="task.id+task.status||''+task.currentTime||''"
+          :key="task.id + task.status || '' + task.currentTime || ''"
           :members="members"
           @created="onCreateTask"
           @updated="updatedTask"
@@ -64,6 +69,7 @@
 
 <script>
 import Avatar from "../../components/Avatar.vue";
+import UserButton from "../../components/button/UserButton.vue";
 import BaseNavBar from "../../components/BaseNavBar.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
 import TaskCard from "../../components/task/TaskCard.vue";
@@ -80,6 +86,7 @@ export default {
   name: "TaskGroup",
   components: {
     Avatar,
+    UserButton,
     BaseNavBar,
     NotificationButton,
     TaskCard,
@@ -90,13 +97,13 @@ export default {
     LogoutButton,
     HomeButton,
     GroupsButton,
-    MemberList
+    MemberList,
   },
   data() {
     return {
       id: -1,
       idUser: -1,
-      selectedFilter:"todas",
+      selectedFilter: "todas",
       hasNotification: false,
       title: "",
       description: "",
@@ -109,11 +116,14 @@ export default {
   computed: {
     filtredTasks() {
       const filtredCallback = {
-        "todas": () => this.tasks,
-        "completas": () => this.tasks.filter((task) => task.status === "completed"),
-        "incompletas": () =>  this.tasks.filter(
-            (task) => task.status === "not-completed" || task.status === null),
-          "expiradas":()=> this.tasks.filter((task) => task.status === "blocked")
+        todas: () => this.tasks,
+        completas: () =>
+          this.tasks.filter((task) => task.status === "completed"),
+        incompletas: () =>
+          this.tasks.filter(
+            (task) => task.status === "not-completed" || task.status === null
+          ),
+        expiradas: () => this.tasks.filter((task) => task.status === "blocked"),
       };
       return filtredCallback[this.selectedFilter]();
     },
@@ -157,7 +167,7 @@ export default {
       const newTasks = this.tasks.map((task) => {
         return task.id === -1 ? newTask : task;
       });
-      this.tasks = newTasks.sort((a, b)=>{
+      this.tasks = newTasks.sort((a, b) => {
         const dateA = new Date(a.currentTime || null);
         const dateB = new Date(b.currentTime || null);
         return dateB - dateA;
@@ -167,13 +177,13 @@ export default {
       this.tasks = this.tasks.filter((task) => task.id !== id);
     },
     async updatedTask(data) {
-      let tasks = this.tasks.map(task=>{
-        if(task.id !== data.id){
+      let tasks = this.tasks.map((task) => {
+        if (task.id !== data.id) {
           return task;
         }
         return data;
-      })
-      this.tasks = tasks.sort((a, b)=>{
+      });
+      this.tasks = tasks.sort((a, b) => {
         const dateA = new Date(a.currentTime || null);
         const dateB = new Date(b.currentTime || null);
         return dateB - dateA;
@@ -277,12 +287,12 @@ export default {
 
     if (create !== "true" && this.id !== -1) {
       const response = await Api.get(`task-groups/${this.id}`);
-      const {group, tasks} = response.data;
+      const { group, tasks } = response.data;
       this.id = group.id;
       this.title = group.title;
       this.description = group.description;
       this.tasks = tasks;
-      this.members = [1,2,3,4];
+      this.members = [1, 2, 3, 4];
       //this.members = members;
     } else {
       this.title = "title";
