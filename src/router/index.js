@@ -10,6 +10,7 @@ import TaskGroup from '../pages/taskGroup/TaskGroup.vue';
 import Notifications from '../pages/Notifications.vue';
 import editUser from '../pages/client/edit.vue'
 
+
 const publicPages = ['/','/about', '/contact', '/login', '/signup', '/not-found'];
 const routes = [
 
