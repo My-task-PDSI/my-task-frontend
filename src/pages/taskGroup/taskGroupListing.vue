@@ -7,8 +7,8 @@
       </div>
       <TheSearch @search="startSearch" />
       <HomeButton />
-      <UserButton/>
-      <NotificationButton :notify="hasNotification"/>
+      <UserButton />
+      <NotificationButton :notify="hasNotification" />
       <LogoutButton />
     </BaseNavBar>
     <div class="task-menu-container">
@@ -56,7 +56,7 @@ export default {
     TheSearch,
     TheTitleAndDate,
     ButtonAdd,
-    HomeButton
+    HomeButton,
   },
   data() {
     return {

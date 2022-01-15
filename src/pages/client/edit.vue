@@ -4,7 +4,7 @@
       <Avatar />
       <div class="nav-btns">
         <HomeButton />
-        <UserButton/>
+        <UserButton />
         <GroupsButton />
         <NotificationButton :notify="hasNotification" />
         <LogoutButton />
@@ -27,13 +27,12 @@
         class="username"
         type="text"
         placeholder="Nome de usuário"
-        :readonly=true
+        :readonly="true"
         v-model="newUser.username"
       />
       <br />
       <Button msg="Alterar" v-on:click="alter" /> <br />
       <br />
-
     </div>
   </div>
 </template>
@@ -48,12 +47,12 @@ import Api from "../../services/api";
 import LogoutButton from "../../components/button/LogoutButton.vue";
 import HomeButton from "../../components/button/HomeButton.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
-function IsEmail(email){
+function IsEmail(email) {
   var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-    if(reg.test(email)){
-        return true;
-    }
-    return false;
+  if (reg.test(email)) {
+    return true;
+  }
+  return false;
 }
 export default {
   components: {
@@ -63,66 +62,65 @@ export default {
     Button,
     LogoutButton,
     HomeButton,
-    NotificationButton
+    NotificationButton,
   },
   props: {
     title: String,
     id: Number,
     idUser: Number,
   },
-  mounted:function(){
-      this.getUser()
+  mounted: function () {
+    this.getUser();
   },
   data() {
     return {
       newUser: {
         name: "",
         email: "",
-        username: "", 
-        newPassword:""
+        username: "",
+        newPassword: "",
       },
     };
   },
   methods: {
-    async getUser(){
-        console.log("123333", `user/username/`+this.$store.state.user.username)
-   const response = await Api.get(`user/username/`+this.$store.state.user.username);
+    async getUser() {
+      console.log("123333", `user/username/` + this.$store.state.user.username);
+      const response = await Api.get(
+        `user/username/` + this.$store.state.user.username
+      );
       if (response.status === 200) {
-          this.newUser.username = response.data.username
-          this.newUser.name = response.data.name
-          this.newUser.email = response.data.email  
+        this.newUser.username = response.data.username;
+        this.newUser.name = response.data.name;
+        this.newUser.email = response.data.email;
       }
     },
-    getUsername(){
-        return this.$store.state.user.username
+    getUsername() {
+      return this.$store.state.user.username;
     },
-    
-    
+
     alter() {
       if (this.newUser.name == "" || this.newUser.email == "") {
         this.$notify({
           type: "error",
           text: "Preencha os campos corretamente!",
         });
-      }else if (!IsEmail(this.newUser.email))  { 
-         this.$notify({
+      } else if (!IsEmail(this.newUser.email)) {
+        this.$notify({
           type: "error",
           text: "Digite um email valido",
         });
-       }
-       else if (this.newUser.name.length < 3) {
+      } else if (this.newUser.name.length < 3) {
         this.$notify({
           type: "error",
           text: "O nome do usuário deve ter ao menos 5 caracteres",
         });
-       } 
-      else if (this.newUser.username.length < 5) {
+      } else if (this.newUser.username.length < 5) {
         this.$notify({
           type: "error",
           text: "O username deve ter ao menos 5 caracteres",
         });
       } else {
-        Api.put("user/signup/"+this.newUser.username, this.newUser)
+        Api.put("user/signup/" + this.newUser.username, this.newUser)
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
@@ -131,7 +129,7 @@ export default {
                 text: "Cadastro realizado com sucesso!",
               });
             } else {
-                console.log("TXT ", response);
+              console.log("TXT ", response);
               this.$notify({ type: "error", text: "Usário já existente" });
             }
           })
@@ -143,8 +141,6 @@ export default {
     },
   },
 };
-
-
 </script>
 <style scoped>
 * {
