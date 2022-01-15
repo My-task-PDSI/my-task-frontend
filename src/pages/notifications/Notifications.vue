@@ -3,11 +3,10 @@
       <BaseNavBar bg-color="#edecf7">
       <Avatar />
       <TheTitleAndDate />
-      <TheSearch @search="startSearch" />
+      <TheSearch />
       <div class="nav-btns">
         <HomeButton />
         <GroupsButton />
-        <NotificationButton :notify="hasNotification" />
         <LogoutButton />
       </div>
     </BaseNavBar>
