@@ -1,7 +1,10 @@
 <template>
   <div>
     <BaseNavBar bg-color="#edecf7">
+    <div class="profile">
       <Avatar />
+      <TheTitleAndDate :title="'Perfil'"/>
+    </div>
       <div class="nav-btns">
         <HomeButton />
         <NotificationButton :notify="hasNotification" />
@@ -50,6 +53,8 @@ import HomeButton from "../../components/button/HomeButton.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
 import GroupsButton from "../../components/button/GroupsButton.vue"
 
+import TheTitleAndDate from '../../components/TheTitleAndDate.vue'
+
 function IsEmail(email) {
   var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
   if (reg.test(email)) {
@@ -65,6 +70,7 @@ export default {
     GroupsButton,
     Button,
     LogoutButton,
+    TheTitleAndDate,
     HomeButton,
     NotificationButton,
   },
@@ -180,6 +186,9 @@ span button {
   font-weight: bold;
   color: #1649ff;
   background-color: #ffff;
+}
+.profile {
+  display: flex;
 }
 
 span button:hover {

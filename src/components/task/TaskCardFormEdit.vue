@@ -28,7 +28,7 @@
         <label for="time">Time</label>
         <input type="datetime-local" name="time" :value="dateTimeFormat" />
       </div>
-      <MemberList :member-list="members" />
+      
       <div class="button-container">
         <button @click="onSave" class="btn">Save</button>
         <button @click="onClose" class="btn">Close</button>
@@ -40,12 +40,11 @@
 
 <script>
 import TheCheckBox from "../TheCheckBox.vue";
-import MemberList from "../member/MemberList.vue";
+
 export default {
   name: "TaskCardFormEdit",
   components: {
-    TheCheckBox,
-    MemberList
+    TheCheckBox
   },
   props: {
     id: {

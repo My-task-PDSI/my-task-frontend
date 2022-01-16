@@ -1,9 +1,10 @@
 <template>
   <div class="notifications-container">
       <BaseNavBar bg-color="#edecf7">
-      <Avatar />
-      <TheTitleAndDate />
-      <TheSearch />
+      <div class="profile">
+        <Avatar />
+        <TheTitleAndDate :title="'Notificações'"/>
+      </div>
       <div class="nav-btns">
         <HomeButton />
         <GroupsButton />
@@ -12,7 +13,7 @@
         <LogoutButton />
       </div>
     </BaseNavBar>
-    <h2>Notificações</h2>
+    <h2>Seus avisos</h2>
     <NotificationsCard />
     </div>
 </template>
@@ -37,7 +38,7 @@ export default {
     ChangePasswordButton,
     Avatar,
     TheTitleAndDate,
-    TheSearch,
+    // TheSearch,
     HomeButton,
     GroupsButton,
     LogoutButton,
@@ -51,7 +52,9 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
-
+.profile {
+  display: flex;
+}
 h2 {
   margin: 40px 0 0 10px;
 }

@@ -3,23 +3,21 @@
         <div class="notif-title">
             {{ message }}
         </div>
-        <!-- <button @click="removeNotification">Excluir</button > -->
-        <ButtonRemove class="deleteNotif" @click="removeNotification" />
+
     </div>
 </template>
 
 <script>
-import ButtonRemove from "../../components/button/ButtonRemove.vue";
+
+import Api from '../../services/api';
 export default {
-    name: "Notificaation",
-    components: {
-        ButtonRemove
-    },
+    name: "Notification",
     props: {
         message: String
     },
     methods: {
-        async removeNotification() {
+        async viewNotification() {
+            Api.put()
         }
     },
 }
@@ -29,7 +27,7 @@ export default {
     .notif-container {
         display: flex;
     }
-    .notif-container .deleteNotif {
+    .notif-container .viewNotif {
         margin-left: 50px;
     }
 </style>

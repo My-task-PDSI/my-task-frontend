@@ -19,7 +19,10 @@
     <div v-if="isFetchTaskGroups" class="task-groups-container">
       <h1>fetch groups</h1>
     </div>
-    <div else class="task-groups-container">
+    <div v-else-if="taskGroups.length == 0" class="verification-group">
+      <h3>Você não possui grupos cadastrados!</h3>
+    </div>
+    <div v-else class="task-groups-container">
       <TaskGroupCard
         v-for="group in filtredGroups"
         :id="group.id"
@@ -124,6 +127,9 @@ export default {
   flex-wrap: wrap;
   padding-left: 10px;
   padding-right: 10px;
+}
+.verification-group {
+  margin-left: 20px;
 }
 .task-groups-container {
   width: 100%;

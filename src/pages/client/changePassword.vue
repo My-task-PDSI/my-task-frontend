@@ -1,7 +1,10 @@
 <template>
   <div>
     <BaseNavBar bg-color="#edecf7">
+    <div class="profile">
       <Avatar />
+      <TheTitleAndDate :title="'Senha'"/>
+    </div>
       <div class="nav-btns">
         <HomeButton />
         <NotificationButton :notify="hasNotification" />
@@ -44,6 +47,7 @@
 import BaseNavBar from "../../components/BaseNavBar.vue";
 
 import Avatar from "../../components/Avatar.vue";
+import TheTitleAndDate from "../../components/TheTitleAndDate.vue"
 import UserButton from "../../components/button/UserButton.vue";
 import Button from "../../components/button/Button.vue";
 import Api from "../../services/api";
@@ -57,6 +61,7 @@ export default {
     BaseNavBar,
     UserButton,
     Avatar,
+    TheTitleAndDate,
     GroupsButton,
     Button,
     LogoutButton,
@@ -145,6 +150,9 @@ export default {
 }
 .signupContainer .headerMsg {
   margin: 20px;
+}
+.profile {
+  display: flex;
 }
 .signupContainer .headerMsg .title {
   font-weight: bold;

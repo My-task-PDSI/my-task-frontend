@@ -1,6 +1,9 @@
 <template>
 	<div class="notif-container">
-		<div class="notif-card">
+		<div v-if="notifications.length == 0">
+			<h3>Você não possui notificações</h3>
+		</div>
+		<div v-else class="notif-card">
 			<Notification
 				v-for="item in notifications" 
 				:key="item.id" 

@@ -14,7 +14,6 @@
           :value="description"
         ></textarea>
       </div>
-      <MemberList :member-list="members" />
       <div class="button-container">
         <button @click="onSave" class="btn">Save</button>
         <button @click="onClose" class="btn">Close</button>
@@ -24,12 +23,10 @@
 </template>
 
 <script>
-import MemberList from "../member/MemberList.vue";
+// import MemberList from "../member/MemberList.vue";
 export default {
   name: "TaskGroupFormEdit",
-  components:{
-    MemberList
-  },
+  
   props: {
     id: {
       type: Number,

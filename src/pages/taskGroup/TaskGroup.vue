@@ -1,7 +1,10 @@
 <template>
   <div class="task-group-container">
     <BaseNavBar bg-color="#edecf7">
+    <div class="profile">
       <Avatar />
+      <TheTitleAndDate :title="'Tarefas'" />
+    </div>
       <div class="nav-btns">
         <HomeButton />
         <GroupsButton />
@@ -28,9 +31,16 @@
         <ButtonRemove @click="removeGroup">remove</ButtonRemove>
       </div>
     </div>
+    
     <div class="tasks-container">
-      <MemberList :member-list="members" />
-      <div class="task-info-container">
+      <div v-if="tasks.length == 0" class="task-info-container">
+        <div class="info-title">
+          <h3>Este grupo não possui tarefas</h3>
+        </div>
+        <ButtonAdd @click="addTask" />
+      </div>
+
+      <div v-else class="task-info-container">
         <div class="info-title">
           <h3>Lista de tarefas</h3>
         </div>
@@ -83,13 +93,15 @@ import ButtonAdd from "../../components/button/ButtonAdd.vue";
 import LogoutButton from "../../components/button/LogoutButton.vue";
 import HomeButton from "../../components/button/HomeButton.vue";
 import GroupsButton from "../../components/button/GroupsButton.vue";
-import MemberList from "../../components/member/MemberList.vue";
+import TheTitleAndDate from "../../components/TheTitleAndDate.vue"
+
 export default {
   name: "TaskGroup",
   components: {
     Avatar,
     ChangePasswordButton,
     UserButton,
+    TheTitleAndDate,
     BaseNavBar,
     NotificationButton,
     TaskCard,
@@ -99,8 +111,7 @@ export default {
     ButtonRemove,
     LogoutButton,
     HomeButton,
-    GroupsButton,
-    MemberList,
+    GroupsButton
   },
   data() {
     return {
@@ -113,7 +124,6 @@ export default {
       tasks: [],
       isFetchTasks: true,
       isEditing: false,
-      members: [],
     };
   },
   computed: {
@@ -316,6 +326,9 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+.profile {
+  display: flex;
 }
 .task-group-container {
   width: 100vw;
