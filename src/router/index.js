@@ -7,7 +7,7 @@ import Contact from '../pages/landing/Contact.vue'
 import NotFound from '../pages/landing/NotFound.vue'
 import taskGroupListing from '../pages/taskGroup/taskGroupListing.vue'
 import TaskGroup from '../pages/taskGroup/TaskGroup.vue';
-import Notifications from '../pages/Notifications.vue';
+import Notifications from '../pages/notifications/Notifications.vue';
 import editUser from '../pages/client/edit.vue'
 
 
