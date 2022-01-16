@@ -7,8 +7,9 @@
       </div>
       <TheSearch @search="startSearch" />
       <HomeButton />
-      <UserButton />
       <NotificationButton :notify="hasNotification" />
+      <UserButton />
+      <ChangePasswordButton />
       <LogoutButton />
     </BaseNavBar>
     <div class="task-menu-container">
@@ -33,6 +34,7 @@
 
 <script>
 import BaseNavBar from "../../components/BaseNavBar.vue";
+import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue";
 import Avatar from "../../components/Avatar.vue";
 import TheSearch from "../../components/TheSearch.vue";
 import TheTitleAndDate from "../../components/TheTitleAndDate.vue";
@@ -48,6 +50,7 @@ export default {
 
   components: {
     TaskGroupCard,
+    ChangePasswordButton,
     Avatar,
     UserButton,
     BaseNavBar,

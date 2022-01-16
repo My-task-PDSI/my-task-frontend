@@ -13,26 +13,29 @@
     </BaseNavBar>
     <div class="signupContainer">
       <div class="headerMsg">
-        <h4 class="title">Alteração de informações</h4>
+        <h4 class="title">Alteração de senha</h4>
       </div>
-      <input type="text" placeholder="Nome Completo" v-model="newUser.name" />
-      <br />
       <input
-        class="email"
-        type="email"
-        placeholder="E-mail"
-        v-model="newUser.email"
+        type="password"
+        placeholder="Senha atual"
+        v-model="password.actual"
       />
       <br />
       <input
-        class="username"
-        type="text"
-        placeholder="Nome de usuário"
-        :readonly="true"
-        v-model="newUser.username"
+        class="password"
+        type="password"
+        placeholder="Nova senha"
+        v-model="password.newPassword"
       />
       <br />
-      <Button msg="Alterar" v-on:click="alter" /> <br />
+      <input
+        class="confirmPassword"
+        type="password"
+        placeholder="Repita a nova senha"
+        v-model="password.confirmPassword"
+      />
+      <br />
+      <Button msg="Alterar Senha" v-on:click="alter" /> <br />
       <br />
     </div>
   </div>
@@ -42,22 +45,18 @@
 import BaseNavBar from "../../components/BaseNavBar.vue";
 
 import Avatar from "../../components/Avatar.vue";
-import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue"
+import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue";
+import UserButton from "../../components/button/UserButton.vue";
 import Button from "../../components/button/Button.vue";
 import Api from "../../services/api";
 import LogoutButton from "../../components/button/LogoutButton.vue";
 import HomeButton from "../../components/button/HomeButton.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
-function IsEmail(email) {
-  var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-  if (reg.test(email)) {
-    return true;
-  }
-  return false;
-}
+
 export default {
   components: {
     BaseNavBar,
+    UserButton,
     Avatar,
     ChangePasswordButton,
     Button,
@@ -70,73 +69,68 @@ export default {
     id: Number,
     idUser: Number,
   },
-  mounted: function () {
-    this.getUser();
-  },
   data() {
     return {
-      newUser: {
-        name: "",
-        email: "",
-        username: "",
+      password: {
+        actual: "",
         newPassword: "",
+        confirmPassword: "",
       },
     };
   },
   methods: {
-    async getUser() {
-      console.log("123333", `user/username/` + this.$store.state.user.username);
-      const response = await Api.get(
-        `user/username/` + this.$store.state.user.username
-      );
-      if (response.status === 200) {
-        this.newUser.username = response.data.username;
-        this.newUser.name = response.data.name;
-        this.newUser.email = response.data.email;
-      }
-    },
     getUsername() {
       return this.$store.state.user.username;
     },
 
     alter() {
-      if (this.newUser.name == "" || this.newUser.email == "") {
+      console.log("this -> ", this.password.newPassword.length);
+      if (
+        this.password.confirmPassword == "" ||
+        this.password.actual == "" ||
+        this.password.newPassword == ""
+      ) {
         this.$notify({
           type: "error",
           text: "Preencha os campos corretamente!",
         });
-      } else if (!IsEmail(this.newUser.email)) {
+      } else if (this.password.actual.length < 6) {
         this.$notify({
           type: "error",
-          text: "Digite um email valido",
+          text: "Senha atual incorreta",
         });
-      } else if (this.newUser.name.length < 3) {
+      } else if (this.password.newPassword.length < 6) {
         this.$notify({
           type: "error",
-          text: "O nome do usuário deve ter ao menos 5 caracteres",
+          text: "A nova senha deve ter ao menos 6 caracteres",
         });
-      } else if (this.newUser.username.length < 5) {
+      } else if (this.password.confirmPassword !== this.password.newPassword) {
         this.$notify({
           type: "error",
-          text: "O username deve ter ao menos 5 caracteres",
+          text: "As Senhas devem ser iguais!",
         });
       } else {
-        Api.put("user/signup/" + this.newUser.username, this.newUser)
+        Api.put(
+          "user/signup/password/" + this.$store.state.user.username,
+          this.password
+        )
           .then((response) => {
             console.log(response);
             if (response.status == 200) {
               this.$notify({
                 type: "success",
-                text: "Cadastro realizado com sucesso!",
+                text: "Senha alterada com sucesso!",
               });
-            } else {
-              console.log("TXT ", response);
-              this.$notify({ type: "error", text: "Usário já existente" });
+            } else if (response.status == 400) {
+              this.$notify({
+                type: "error",
+                text: "Senha atual incorreta",
+              });
             }
           })
           .catch((error) => {
             console.log(error);
-            this.$notify({ type: "error", text: "Usário já existente" });
+            this.$notify({ type: "error", text: "Senha atual incorreta" });
           });
       }
     },
