@@ -7,6 +7,8 @@
       <div class="nav-btns">
         <HomeButton />
         <GroupsButton />
+        <UserButton />
+        <ChangePasswordButton />
         <LogoutButton />
       </div>
     </BaseNavBar>
@@ -17,6 +19,8 @@
 <script>
 
 import BaseNavBar from '../../components/BaseNavBar.vue'
+import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue";
+import UserButton from "../../components/button/UserButton.vue";
 import Avatar from '../../components/Avatar.vue'
 import TheTitleAndDate from '../../components/TheTitleAndDate.vue'
 import TheSearch from '../../components/TheSearch.vue'
@@ -29,6 +33,8 @@ export default {
   name: "Notifications",
   components: {
     BaseNavBar,
+    UserButton,
+    ChangePasswordButton,
     Avatar,
     TheTitleAndDate,
     TheSearch,

@@ -4,9 +4,10 @@
       <Avatar />
       <div class="nav-btns">
         <HomeButton />
-        <UserButton />
         <GroupsButton />
         <NotificationButton :notify="hasNotification" />
+        <UserButton />
+        <ChangePasswordButton />
         <LogoutButton />
       </div>
     </BaseNavBar>
@@ -70,6 +71,7 @@
 <script>
 import Avatar from "../../components/Avatar.vue";
 import UserButton from "../../components/button/UserButton.vue";
+import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue";
 import BaseNavBar from "../../components/BaseNavBar.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
 import TaskCard from "../../components/task/TaskCard.vue";
@@ -86,6 +88,7 @@ export default {
   name: "TaskGroup",
   components: {
     Avatar,
+    ChangePasswordButton,
     UserButton,
     BaseNavBar,
     NotificationButton,

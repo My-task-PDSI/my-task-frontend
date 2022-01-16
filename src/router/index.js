@@ -8,6 +8,7 @@ import NotFound from '../pages/landing/NotFound.vue'
 import taskGroupListing from '../pages/taskGroup/taskGroupListing.vue'
 import TaskGroup from '../pages/taskGroup/TaskGroup.vue';
 import Notifications from '../pages/notifications/Notifications.vue';
+import ChangePassword from '../pages/client/changePassword.vue';
 import editUser from '../pages/client/edit.vue'
 
 
@@ -20,6 +21,7 @@ const routes = [
   { path: '/about', component: About },
   { path: '/contact', component: Contact },
   { path: '/not-found', component: NotFound },
+  { path: '/user/changePassword', component: ChangePassword },
   { path: '/notifications', component: Notifications },
   { path: '/task-groups', name: 'task-groups', component: taskGroupListing },
   { path: '/task-groups/tasks/', component: TaskGroup, name: 'group' },
