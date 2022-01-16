@@ -4,8 +4,8 @@
       <Avatar />
       <div class="nav-btns">
         <HomeButton />
-        <GroupsButton />
         <NotificationButton :notify="hasNotification" />
+        <GroupsButton />
         <UserButton />
         <ChangePasswordButton />
         <LogoutButton />
@@ -48,6 +48,8 @@ import Api from "../../services/api";
 import LogoutButton from "../../components/button/LogoutButton.vue";
 import HomeButton from "../../components/button/HomeButton.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
+import GroupsButton from "../../components/button/GroupsButton.vue"
+
 function IsEmail(email) {
   var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
   if (reg.test(email)) {
@@ -60,6 +62,7 @@ export default {
     BaseNavBar,
     Avatar,
     ChangePasswordButton,
+    GroupsButton,
     Button,
     LogoutButton,
     HomeButton,

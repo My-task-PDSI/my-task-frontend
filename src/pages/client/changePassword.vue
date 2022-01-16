@@ -4,10 +4,9 @@
       <Avatar />
       <div class="nav-btns">
         <HomeButton />
-        <GroupsButton />
         <NotificationButton :notify="hasNotification" />
         <UserButton />
-        <ChangePasswordButton />
+        <GroupsButton />
         <LogoutButton />
       </div>
     </BaseNavBar>
@@ -45,20 +44,20 @@
 import BaseNavBar from "../../components/BaseNavBar.vue";
 
 import Avatar from "../../components/Avatar.vue";
-import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue";
 import UserButton from "../../components/button/UserButton.vue";
 import Button from "../../components/button/Button.vue";
 import Api from "../../services/api";
 import LogoutButton from "../../components/button/LogoutButton.vue";
 import HomeButton from "../../components/button/HomeButton.vue";
 import NotificationButton from "../../components/button/NotificationButton.vue";
+import GroupsButton from "../../components/button/GroupsButton.vue"
 
 export default {
   components: {
     BaseNavBar,
     UserButton,
     Avatar,
-    ChangePasswordButton,
+    GroupsButton,
     Button,
     LogoutButton,
     HomeButton,
