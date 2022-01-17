@@ -76,6 +76,11 @@ export default {
   flex-wrap: wrap;
   border-bottom: 4px solid rgb(203, 201, 212);
 }
+
+.task-group-card:hover {
+  cursor: pointer;
+}
+
 .task-rect {
   width: 40px;
   height: 40px;

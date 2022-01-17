@@ -32,4 +32,8 @@ export default {
 .home-container i {
   font-size: 24px;
 }
+
+.home-container i:hover {
+  cursor: pointer;
+}
 </style>

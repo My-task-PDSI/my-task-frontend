@@ -24,7 +24,6 @@ import ChangePasswordButton from "../../components/button/ChangePasswordIcon.vue
 import UserButton from "../../components/button/UserButton.vue";
 import Avatar from '../../components/Avatar.vue'
 import TheTitleAndDate from '../../components/TheTitleAndDate.vue'
-import TheSearch from '../../components/TheSearch.vue'
 import HomeButton from '../../components/button/HomeButton.vue'
 import GroupsButton from '../../components/button/GroupsButton.vue'
 import LogoutButton from '../../components/button/LogoutButton.vue'
@@ -38,7 +37,6 @@ export default {
     ChangePasswordButton,
     Avatar,
     TheTitleAndDate,
-    // TheSearch,
     HomeButton,
     GroupsButton,
     LogoutButton,

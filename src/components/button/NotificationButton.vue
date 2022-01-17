@@ -38,6 +38,9 @@ export default {
 .notification-container i {
   font-size: 24px;
 }
+.notification-container i:hover {
+  cursor: pointer;
+}
 .notify::before {
   position: absolute;
   content: "";

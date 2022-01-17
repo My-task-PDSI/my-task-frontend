@@ -20,7 +20,6 @@
           :id="id"
           :title="title"
           :description="description"
-          :members="members"
           @close="closeForm"
           @save="saveData"
         />
@@ -68,7 +67,6 @@
           :="task"
           :status="task.status"
           :key="task.id + task.status || '' + task.currentTime || ''"
-          :members="members"
           @created="onCreateTask"
           @updated="updatedTask"
           @deleted="deleteTask"
@@ -305,8 +303,6 @@ export default {
       this.title = group.title;
       this.description = group.description;
       this.tasks = tasks;
-      this.members = [1, 2, 3, 4];
-      //this.members = members;
     } else {
       this.title = "title";
       this.description = "description";

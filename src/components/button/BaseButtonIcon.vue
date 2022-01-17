@@ -26,4 +26,7 @@ export default {
   font-size: v-bind(size);
   color: rgb(97, 171, 175);
 }
+.btn-icon:hover {
+  cursor: pointer;
+}
 </style>

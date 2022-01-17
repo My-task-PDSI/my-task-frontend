@@ -235,4 +235,8 @@ export default {
   font-weight: bolder;
   color: rgba(255, 255, 255, 0.904);
 }
+
+.btn:hover {
+  cursor: pointer;
+}
 </style>

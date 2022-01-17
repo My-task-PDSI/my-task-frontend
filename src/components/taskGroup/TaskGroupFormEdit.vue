@@ -39,8 +39,7 @@ export default {
     description: {
       type: String,
       required: true,
-    },
-    members:Array,
+    }
   },
   emits: ["save", "close"],
   methods: {
@@ -147,5 +146,9 @@ export default {
   font-size: 18px;
   font-weight: bolder;
   color: rgba(255, 255, 255, 0.904);
+}
+
+.btn:hover {
+  cursor: pointer;
 }
 </style>

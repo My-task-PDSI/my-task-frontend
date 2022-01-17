@@ -142,10 +142,9 @@ export default {
 };
 </script>
 <style scoped>
-* {
-  text-align: center;
-}
+
 .signupContainer {
+  text-align: center;
   margin-top: 40px;
 }
 .signupContainer .headerMsg {

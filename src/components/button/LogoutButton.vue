@@ -36,4 +36,7 @@ export default {
   font-size: 24px;
   color: rgb(255, 53, 53);
 }
+.logout-container i:hover {
+  cursor: pointer;
+}
 </style>

@@ -8,6 +8,7 @@
 				v-for="item in notifications" 
 				:key="item.id" 
 				:message="item.message" 
+				:groupTitle="item.groupTitle"
 			/>
 		</div>
 	</div>

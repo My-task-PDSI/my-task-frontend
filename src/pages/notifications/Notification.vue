@@ -1,33 +1,32 @@
 <template>
     <div class="notif-container">
+        <div class="notif-group-title">
+            {{ groupTitle }}
+        </div>
         <div class="notif-title">
             {{ message }}
         </div>
-
     </div>
 </template>
 
 <script>
 
-import Api from '../../services/api';
 export default {
     name: "Notification",
     props: {
+        groupTitle: String,
         message: String
-    },
-    methods: {
-        async viewNotification() {
-            Api.put()
-        }
-    },
+    }
 }
 </script>
 
 <style scoped>
     .notif-container {
-        display: flex;
+        display: table
     }
-    .notif-container .viewNotif {
-        margin-left: 50px;
+    .notif-container .notif-group-title {
+        color: #BB2222;
+        font-size: 20px;
+        font-weight: bold;
     }
 </style>
