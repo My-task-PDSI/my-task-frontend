@@ -5,7 +5,7 @@
       
       <div id="content">
           <div class="content-body">
-              <h1>Not Found</h1>
+              <h1>ERRO 404 (Not Found)</h1>
               
               <p>Desculpe, essa página não foi encontrada :/</p>
           </div>

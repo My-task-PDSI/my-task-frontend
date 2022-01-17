@@ -220,6 +220,9 @@ span button:hover {
   width: 180px;
   height: auto;
 }
+.username {
+  cursor: not-allowed;
+}
 
 .task-menu-container {
   width: 100%;
